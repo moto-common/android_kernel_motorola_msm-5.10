@@ -159,14 +159,16 @@ KBUILD_IMAGE	:= $(boot)/Image.gz
 
 # Don't compile Image in mixed build with "all" target
 ifndef KBUILD_MIXED_TREE
-all:	Image.gz
+all:	Image.gz dtbo.img
 endif
-
 
 Image: vmlinux
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
 Image.%: Image
+	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
+
+dtbo.img: dtbs
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
 zinstall install:
@@ -181,6 +183,9 @@ vdso_install:
 # We use MRPROPER_FILES and CLEAN_FILES now
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)
+
+CLEAN_FILES += $(boot)/Image $(boot)/Image.* $(boot)/dtbo.img
+MRPROPER_FILES += $(boot)/Image $(boot)/Image.* $(boot)/dtbo.img
 
 ifeq ($(KBUILD_EXTMOD),)
 # We need to generate vdso-offsets.h before compiling certain files in kernel/.
