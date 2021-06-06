@@ -1,0 +1,10 @@
+/dts-v1/;
+/plugin/;
+
+#include "waipio-audio-moto-hiphi-common.dtsi"
+ / {
+	model = "hiphi";
+	compatible = "qcom,waipio", "moto,hiphi";
+	qcom,msm-id = <457 0x10000>, <482 0x10000>;
+	qcom,board-id = <0x41 0x9100>;
+};

@@ -1,4 +1,6 @@
 
+#remove useless qcom device tree in moto build
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-cdp.dtbo \
                  waipio-audio-mtp.dtbo \
@@ -6,6 +8,10 @@ dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-atp.dtbo \
                  waipio-audio-rumi.dtbo \
                  waipio-audio-hdk.dtbo
+else
+dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
+                 waipio-audio-moto-hiphi-evb1.dtbo
+endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-idp.dtbo \
