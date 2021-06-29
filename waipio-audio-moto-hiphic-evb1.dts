@@ -3,8 +3,8 @@
 
 #include "waipio-audio-moto-hiphi-common.dtsi"
  / {
-	model = "hiphi";
-	compatible = "qcom,waipio", "moto,hiphi";
+	model = "hiphic";
+	compatible = "qcom,waipio", "moto,hiphic";
 	qcom,msm-id = <457 0x10000>, <482 0x10000>;
-	qcom,board-id = <0x47 0x9100>;
+	qcom,board-id = <0x45 0x9100>, <0x45 0xA100>;
 };
