@@ -136,11 +136,11 @@
 	qcom,cdc-vdd-dmic1-current = <30000>;
 
 	cdc-vdd-dmic2-supply = <&S1C>;
-	qcom,cdc-vdd-dmic2-voltage = <1800000 1800000>;
+	qcom,cdc-vdd-dmic2-voltage = <1900000 2100000>;
 	qcom,cdc-vdd-dmic2-current = <30000>;
 
 	cdc-vdd-dmic3-supply = <&S1C>;
-	qcom,cdc-vdd-dmic3-voltage = <1800000 1800000>;
+	qcom,cdc-vdd-dmic3-voltage = <1900000 2100000>;
 	qcom,cdc-vdd-dmic3-current = <30000>;
 
 	qcom,cdc-static-supplies = "cdc-vdd-dmic1",
