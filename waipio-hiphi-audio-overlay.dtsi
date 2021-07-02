@@ -150,6 +150,10 @@
 		"TX DMIC1", "Digital Mic1",
 		"TX DMIC2", "Digital Mic2",
 		"TX DMIC3", "Digital Mic3",
+		"TX DMIC4", "Digital Mic4",
+		"TX DMIC5", "Digital Mic5",
+		"TX DMIC6", "Digital Mic6",
+		"TX DMIC7", "Digital Mic7",
 		"WSA SRC0_INP", "SRC0",
 		"HAP_IN", "PCM_OUT",
 		"WSA_TX DEC0_INP", "TX DEC0 MUX",
@@ -167,7 +171,11 @@
 		"VA DMIC0", "Digital Mic0",
 		"VA DMIC1", "Digital Mic1",
 		"VA DMIC2", "Digital Mic2",
-		"VA DMIC3", "Digital Mic3";
+		"VA DMIC3", "Digital Mic3",
+		"VA DMIC4", "Digital Mic4",
+		"VA DMIC5", "Digital Mic5",
+		"VA DMIC6", "Digital Mic6",
+		"VA DMIC7", "Digital Mic7";
 	asoc-codec  = <&stub_codec>, <&lpass_cdc>,
 				<&swr_haptics>,
 				<&wsa883x_0221>, <&wsa883x_0222>;
