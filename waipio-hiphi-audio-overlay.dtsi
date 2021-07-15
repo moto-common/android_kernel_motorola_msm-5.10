@@ -18,6 +18,10 @@
 	status = "ok";
 };
 
+&wsa2_spkr_en1 {
+	status = "disabled";
+};
+
 &spf_core_platform {
 	dmic23_en_gpio: dmic23_en_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
