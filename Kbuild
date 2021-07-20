@@ -11,7 +11,8 @@ dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
 else
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-moto-hiphi-evb1.dtbo \
-                 waipio-audio-moto-hiphic-evb1.dtbo
+                 waipio-audio-moto-hiphic-evb1.dtbo \
+                 waipio-audio-moto-hiphic-dvt1.dtbo
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
