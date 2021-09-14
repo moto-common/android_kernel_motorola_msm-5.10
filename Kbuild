@@ -9,10 +9,16 @@ dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-rumi.dtbo \
                  waipio-audio-hdk.dtbo
 else
+# ironmn audio bringup
+ifeq ($(CONFIG_IRONMN_DTB),y)
+dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
+                 waipio-audio-moto-ironmn-evb1.dtbo
+else
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-moto-hiphi-evb1.dtbo \
                  waipio-audio-moto-hiphic-evb1.dtbo \
                  waipio-audio-moto-hiphic-dvt1.dtbo
+endif  #($CONFIG_IRONMN_DTB,y)
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
