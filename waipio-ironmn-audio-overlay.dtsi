@@ -288,10 +288,6 @@
 	status = "disabled";
 };
 
-&sde_dp {
-        status = "disabled";
-};
-
 &wcd938x_rst_gpio {
 	status = "disabled";
 };
@@ -369,6 +365,21 @@
 */
 };
 
+&qupv3_se15_i2c {
+        fsa4480_switch: fsa4480@43 {
+                compatible = "qcom,fsa4480-i2c";
+                reg = <0x43>;
+        };
+};
+
+&fsa4480 {
+	status = "disabled";
+};
+
+&sde_dp {
+	qcom,dp-aux-switch = <&fsa4480_switch>;
+};
+
 &waipio_snd {
 	qcom,model = "waipio-mtp-snd-card";
 	qcom,msm-mi2s-master = <1>, <1>, <1>, <1>, <1>, <1>;
@@ -417,4 +428,5 @@
 			<&cirrus_cs35l45_3>;
 	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
 			"cirrus-spk-1", "cirrus-spk-2", "cirrus-spk-3";
+	fsa4480-i2c-handle = <&fsa4480_switch>;
 };
