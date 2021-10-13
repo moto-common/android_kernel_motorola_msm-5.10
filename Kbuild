@@ -13,6 +13,9 @@ else
 ifeq ($(CONFIG_IRONMN_DTB),y)
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-moto-ironmn-evb1.dtbo
+else ifeq ($(CONFIG_LI_DTB),y)
+dtbo-y += waipio-audio.dtbo \
+                 waipio-audio-moto-li-evb1.dtbo
 else
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-moto-hiphi-evb1.dtbo \
