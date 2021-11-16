@@ -20,7 +20,8 @@ else
 dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
                  waipio-audio-moto-hiphi-evb1.dtbo \
                  waipio-audio-moto-hiphic-evb1.dtbo \
-                 waipio-audio-moto-hiphic-dvt1.dtbo
+                 waipio-audio-moto-hiphic-dvt1.dtbo \
+                 waipio-audio-moto-hiphid-pvt.dtbo
 endif  #($CONFIG_IRONMN_DTB,y)
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
