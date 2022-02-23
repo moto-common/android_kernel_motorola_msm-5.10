@@ -49,6 +49,8 @@ dtbo-$(CONFIG_ARCH_RAVELIN) += ravelin-audio.dtbo \
                  ravelin-audio-qrd.dtbo \
                  ravelin-audio-atp.dtbo
 
+#remove useless qcom device tree in moto build
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  cape-audio-cdp.dtbo \
                  cape-audio-cdp-qhd.dtbo \
@@ -65,6 +67,12 @@ dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  ukee-audio-mtp-nodisplay.dtbo \
                  ukee-audio-cdp-qhd.dtbo \
                  ukee-audio-cdp.dtbo
+else
+ifeq ($(CONFIG_ONELI_DTB),y)
+dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
+                 cape-audio-moto-oneli-evt1.dtbo
+endif  #($CONFIG_ONELI_DTB,y)
+endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
  always-y    := $(dtb-y) $(dtbo-y)
  subdir-y    := $(dts-dirs)
