@@ -72,6 +72,10 @@ ifeq ($(CONFIG_ONELI_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  cape-audio-moto-oneli-evt1.dtbo
 endif  #($CONFIG_ONELI_DTB,y)
+ifeq ($(CONFIG_EQS_DTB),y)
+dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
+                 cape-audio-moto-eqs-evt1.dtbo
+endif  #($CONFIG_EQS_DTB,y)
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
  always-y    := $(dtb-y) $(dtbo-y)
