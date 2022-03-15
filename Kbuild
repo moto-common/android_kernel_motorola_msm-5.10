@@ -70,7 +70,8 @@ dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
 else
 ifeq ($(CONFIG_ONELI_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
-                 cape-audio-moto-oneli-evt1.dtbo
+                 cape-audio-moto-oneli-evt1.dtbo \
+                 cape-audio-moto-oneli-dvt1b.dtbo
 endif  #($CONFIG_ONELI_DTB,y)
 ifeq ($(CONFIG_EQS_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
