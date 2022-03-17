@@ -9,3 +9,22 @@
 	qcom,msm-id = <530 0x10000>, <531 0x10000>, <540 0x10000>;
 	qcom,board-id = <0x45 0xB1B0>;
 };
+
+&spkr_2_sd_n_sleep {
+	mux {
+		pins = "gpio88";
+	};
+	config {
+		pins = "gpio88";
+	};
+};
+
+&spkr_2_sd_n_active {
+	mux {
+		pins = "gpio88";
+	};
+
+	config {
+		pins = "gpio88";
+	};
+};
