@@ -7,7 +7,7 @@
 };
 
 &wcd938x_codec {
-        status = "disabled";
+	status = "disabled";
 };
 
 &wcd938x_tx_slave {
@@ -22,35 +22,21 @@
 	status = "disabled";
 };
 
-&tlmm {
-	spkr_2_sd_n {
-		spkr_2_sd_n_sleep: spkr_2_sd_n_sleep {
-			mux {
-				pins = "gpio87";
-				function = "gpio";
-			};
+&spkr_2_sd_n_sleep {
+	mux {
+		pins = "gpio87";
+	};
+	config {
+		pins = "gpio87";
+	};
+};
 
-			config {
-				pins = "gpio87";
-				drive-strength = <2>;   /* 2 mA */
-				bias-pull-down;
-				input-enable;
-			};
-		};
-
-		spkr_2_sd_n_active: spkr_2_sd_n_active {
-			mux {
-				pins = "gpio87";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio87";
-				drive-strength = <16>;   /* 16 mA */
-				bias-disable;
-				output-high;
-			};
-		};
+&spkr_2_sd_n_active {
+	mux {
+		pins = "gpio87";
+	};
+	config {
+		pins = "gpio87";
 	};
 };
 
