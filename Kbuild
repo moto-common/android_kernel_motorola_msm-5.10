@@ -76,6 +76,14 @@ dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  ukee-audio-cdp-qhd.dtbo \
                  ukee-audio-cdp.dtbo
 else
+# felix audio bringup
+ifeq ($(CONFIG_FELIX_DTB),y)
+dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
+                 cape-audio-moto-felix-evt1.dtbo \
+                 cape-audio-moto-felix-evt1a.dtbo \
+                 cape-audio-moto-felix-evt1b.dtbo \
+                 cape-audio-moto-felix-evt1c.dtbo
+endif  #($CONFIG_FELIX_DTB,y)
 ifeq ($(CONFIG_ONELI_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  cape-audio-moto-oneli-evt1.dtbo \
@@ -85,10 +93,6 @@ ifeq ($(CONFIG_ZEEKR_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  cape-audio-moto-zeekr-evb.dtbo
 endif  #($CONFIG_ZEEKR_DTB,y)
-ifeq ($(CONFIG_FELIX_DTB),y)
-dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
-                 cape-audio-moto-oneli-dvt1b.dtbo
-endif  #($CONFIG_FELIX_DTB,y)
 ifeq ($(CONFIG_EQS_DTB),y)
 dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
                  cape-audio-moto-eqs-evt1.dtbo
