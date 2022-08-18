@@ -62,6 +62,10 @@
 	status = "disabled";
 };
 
+&fsa4480 {
+	status = "okay";
+};
+
 &qupv3_se2_i2c {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -119,6 +123,14 @@
 		"AMIC2", "MIC BIAS2",
 		"AMIC3", "Analog Mic3",
 		"AMIC3", "MIC BIAS3",
+		"TX DMIC0", "Digital Mic0",
+		"TX DMIC0", "MIC BIAS3",
+		"TX DMIC1", "Digital Mic1",
+		"TX DMIC1", "MIC BIAS3",
+		"TX DMIC2", "Digital Mic2",
+		"TX DMIC2", "MIC BIAS1",
+		"TX DMIC3", "Digital Mic3",
+		"TX DMIC3", "MIC BIAS1",
 		"IN1_HPHL", "HPHL_OUT",
 		"IN2_HPHR", "HPHR_OUT",
 		"IN3_AUX", "AUX_OUT",
@@ -151,4 +163,5 @@
 			   "wcd937x_codec",
 			   "aw882xx_smartpa.0-0034", "aw882xx_smartpa.0-0035";
 	qcom,wsa-max-devs = <0>;
+	fsa4480-i2c-handle = <&fsa4480>;
 };
