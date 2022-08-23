@@ -99,7 +99,8 @@ dtbo-$(CONFIG_ARCH_CAPE) += cape-audio.dtbo \
 endif  #($CONFIG_EQS_DTB,y)
 
 dtbo-$(CONFIG_BRONCO_DTB) += cape-audio.dtbo \
-                 cape-audio-moto-bronco-evb1.dtbo
+                 cape-audio-moto-bronco-evb1.dtbo \
+                 cape-audio-moto-bronco-dvt1.dtbo
 
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
