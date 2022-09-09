@@ -26,3 +26,30 @@
 	qcom,msm-mbhc-hphl-swh = <0>;
 	qcom,msm-mbhc-gnd-swh = <0>;
 };
+
+&usb3phy_portselect_default {
+	mux {
+		pins = "gpio91";
+		function = "usb_phy";
+	};
+
+	config {
+		pins = "gpio91";
+		bias-pull-down;
+		drive-strength = <2>;
+	};
+};
+
+&usb3phy_portselect_gpio {
+	mux {
+		pins = "gpio91";
+		function = "gpio";
+	};
+
+	config {
+		pins = "gpio91";
+		drive-strength = <2>;
+		bias-pull-down;
+		input-enable;
+	};
+};
