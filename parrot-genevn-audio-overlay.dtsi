@@ -2,6 +2,28 @@
 	qcom,num-macros = <3>;
 };
 
+&va_macro {
+	swr2: va_swr_master {
+		wcd938x_tx_slave: wcd938x-tx-slave {
+			status = "disabled";
+		};
+		wcd937x_tx_slave: wcd937x-tx-slave {
+			status = "okay";
+		};
+	};
+};
+
+&rx_macro {
+	swr1: rx_swr_master {
+		wcd938x_rx_slave: wcd938x-rx-slave {
+			status = "disabled";
+		};
+		wcd937x_rx_slave: wcd937x-rx-slave {
+			status = "okay";
+		};
+	};
+};
+
 &wcd937x_codec {
 	status = "okay";
 	qcom,cdc-micbias1-mv = <2800>;
