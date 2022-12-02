@@ -25,6 +25,8 @@ dtbo-$(CONFIG_ARCH_WAIPIO) += waipio-audio.dtbo \
 endif  #($CONFIG_IRONMN_DTB,y)
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
+#remove useless qcom device tree in moto build
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-idp.dtbo \
                  diwali-audio-idp-amoled.dtbo \
@@ -32,6 +34,12 @@ dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-atp.dtbo \
                  diwali-audio-idp-hsp.dtbo \
                  diwali-audio-idp-usbc.dtbo
+else
+ifeq ($(CONFIG_LYNKCO_DTB),y)
+dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
+                 diwali-audio-moto-lynkco-evb1.dtbo
+endif  #($CONFIG_LYNKCO_DTB,y)
+endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
 #remove useless qcom device tree in moto build
 ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
