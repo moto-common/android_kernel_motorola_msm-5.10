@@ -2755,6 +2755,7 @@ const char *cmd_set_prop_map[DSI_CMD_SET_MAX] = {
 	"qcom,mdss-dsi-dfps-120-command",
 	"qcom,mdss-dsi-dfps-144-command",
 	"qcom,mdss-dsi-panel-cellid-command",
+	"qcom,mdss-dsi-timing-switch-command-base",
 };
 
 const char *cmd_set_state_map[DSI_CMD_SET_MAX] = {
@@ -2804,6 +2805,7 @@ const char *cmd_set_state_map[DSI_CMD_SET_MAX] = {
 	"qcom,mdss-dsi-dfps-120-command-state",
 	"qcom,mdss-dsi-dfps-144-command-state",
 	"qcom,mdss-dsi-panel-cellid-command-state",
+	"qcom,mdss-dsi-timing-switch-command-base-state",
 };
 
 int dsi_panel_get_cmd_pkt_count(const char *data, u32 length, u32 *cnt)
@@ -4874,6 +4876,16 @@ static int dsi_panel_parse_mot_panel_config(struct dsi_panel *panel,
 				"qcom,mot_nt37701A_read_cellid");
 
 	panel->esd_first_check = false;
+
+	rc = of_property_read_u32(of_node,
+				"qcom,refresh-rate-base",&panel->refresh_rate_base);
+        if (rc) {
+            DSI_INFO("panel->refresh_rate_base not found\n");
+            panel->refresh_rate_base = 0;
+        } else {
+            DSI_INFO("got refresh_rate_base %d\n", panel->refresh_rate_base);
+        }
+
 	return rc;
 }
 
@@ -5630,6 +5642,7 @@ int dsi_panel_get_mode(struct dsi_panel *panel,
 		if (rc)
 			DSI_ERR("failed to partial update caps, rc=%d\n", rc);
 	}
+
 	goto done;
 
 parse_fail:
@@ -6274,8 +6287,12 @@ int dsi_panel_switch(struct dsi_panel *panel)
 	}
 
 	mutex_lock(&panel->panel_lock);
-
-	rc = dsi_panel_tx_cmd_set(panel, DSI_CMD_SET_TIMING_SWITCH);
+	if((panel->refresh_rate_base == RRGSFlag_120HzBased) &  panel->switch_rate_base){
+		DSI_INFO("Switch rate base 120hz\n");
+		rc = dsi_panel_tx_cmd_set(panel, DSI_CMD_SET_TIMING_SWITCH_BASE);
+	}else{
+		rc = dsi_panel_tx_cmd_set(panel, DSI_CMD_SET_TIMING_SWITCH);
+	}
 	if (rc)
 		DSI_ERR("[%s] failed to send DSI_CMD_SET_TIMING_SWITCH cmds, rc=%d\n",
 		       panel->name, rc);
