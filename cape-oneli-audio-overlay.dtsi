@@ -40,6 +40,14 @@
 	};
 };
 
+&wsa883x_0221 {
+	qcom,wsa-recovery-enabled = <1>;
+};
+
+&wsa883x_0222 {
+	qcom,wsa-recovery-enabled = <1>;
+};
+
 &waipio_snd {
 	qcom,model = "waipio-mtp-snd-card";
 	qcom,msm-mi2s-master = <0>, <0>, <0>, <0>, <0>, <0>;
