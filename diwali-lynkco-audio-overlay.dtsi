@@ -32,6 +32,10 @@
 	status = "disabled";
 };
 
+&wcd_rst_gpio {
+	status = "disabled";
+};
+
 &apps_rsc {
 	rpmh-regulator-ldoc2 {
 		compatible = "qcom,rpmh-vrm-regulator";
