@@ -102,6 +102,7 @@
 		sound-channel = <1>; /*0:pri_l 1:pri_r 2:sec_l 3:sec_r*/
 		aw-re-min = <4000>;
 		aw-re-max= <30000>;
+		rename-flag = <1>;
 		aw-cali-mode = "none";
 		monitor-mode = "hal_monitor";
 		status = "okay";
@@ -113,6 +114,7 @@
 		sound-channel = <0>; /*0:pri_l 1:pri_r 2:sec_l 3:sec_r*/
 		aw-re-min = <4000>;
 		aw-re-max= <30000>;
+		rename-flag = <1>;
 		aw-cali-mode = "none";
 		monitor-mode = "hal_monitor";
 		status = "okay";
