@@ -40,6 +40,18 @@
 	};
 };
 
+&wsa_swr_clk_active {
+	config {
+		drive-strength = <4>;
+	};
+};
+
+&wsa_swr_data_active {
+	config {
+		drive-strength = <4>;
+	};
+};
+
 &waipio_snd {
 	qcom,model = "waipio-mtp-snd-card";
 	qcom,msm-mi2s-master = <0>, <0>, <0>, <0>, <0>, <0>;
