@@ -52,6 +52,10 @@
 	};
 };
 
+&swr0 {
+	qcom,swr-adsp-recovery-enabled = <1>;
+};
+
 &waipio_snd {
 	qcom,model = "waipio-mtp-snd-card";
 	qcom,msm-mi2s-master = <0>, <0>, <0>, <0>, <0>, <0>;
