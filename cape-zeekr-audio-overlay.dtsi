@@ -52,8 +52,8 @@
 	};
 };
 
-&swr0 {
-	qcom,swr-adsp-recovery-enabled = <1>;
+&wsa883x_0221 {
+	qcom,wsa-adsp-recovery-enabled = <1>;
 };
 
 &waipio_snd {
