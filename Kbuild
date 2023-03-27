@@ -38,7 +38,8 @@ else
 ifeq ($(CONFIG_LYNKCO_DTB),y)
 dtbo-$(CONFIG_ARCH_DIWALI) += diwali-audio.dtbo \
                  diwali-audio-moto-lynkco-evb1.dtbo \
-                 diwali-audio-moto-lynkco-evt1.dtbo
+                 diwali-audio-moto-lynkco-evt1.dtbo \
+                 diwali-audio-moto-lynkco-dvt2c.dtbo
 endif  #($CONFIG_LYNKCO_DTB,y)
 endif  #($(CONFIG_MMI_DEVICE_DTBS),y)
 
