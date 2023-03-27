@@ -308,7 +308,6 @@ static int _sde_power_data_bus_set_quota(
 {
 	int rc = 0, i = 0;
 	u32 paths = pdbus->data_paths_cnt;
-	u64 final_ab_quota,temp,max_val = 8800000000;
 
 	if (!paths || paths > DATA_BUS_PATH_MAX) {
 		pr_err("invalid data bus handle, paths %d\n", paths);
@@ -317,16 +316,11 @@ static int _sde_power_data_bus_set_quota(
 
 	in_ab_quota = div_u64(in_ab_quota, paths);
 
-	temp = div_u64((in_ab_quota * 40), 10);
-	final_ab_quota = min(temp, max_val);
-
-	pr_debug("QIPL final:%llu calculated:%llu ib:%llu", final_ab_quota,in_ab_quota,in_ib_quota );
-
 	SDE_ATRACE_BEGIN("msm_bus_scale_req");
 	for (i = 0; i < paths; i++) {
 		if (pdbus->data_bus_hdl[i]) {
 			rc = icc_set_bw(pdbus->data_bus_hdl[i],
-					Bps_to_icc(final_ab_quota),
+					Bps_to_icc(in_ab_quota),
 					Bps_to_icc(in_ib_quota));
 			if (rc)
 				goto err;
