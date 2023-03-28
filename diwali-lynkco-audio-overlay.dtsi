@@ -57,7 +57,7 @@
 };
 
 &waipio_snd {
-	qcom,model = "diwali-qrd-snd-card";
+	qcom,model = "diwali-qrd-snd-card-no_haptic";
 	qcom,sku-model = "diwali-qrd-sku1-snd-card";
 	nvmem-cells = <&adsp_variant>;
 	nvmem-cell-names = "adsp_variant";
