@@ -1,5 +1,9 @@
 #include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
 
+&audio_cma_mem {
+    size = <0x0 0x2800000>;
+};
+
 &fsa4480 {
 	status = "disabled";
 };
