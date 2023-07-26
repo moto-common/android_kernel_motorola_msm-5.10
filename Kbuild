@@ -55,21 +55,27 @@ dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-qrd-wcn6750.dtbo \
                  parrot-audio-atp.dtbo
 else
-ifeq ($(CONFIG_GENEVA_DTB),y)
-dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
-                 parrot-audio-moto-geneva-evb.dtbo
-else ifeq ($(CONFIG_GENEVN_DTB),y)
+ifeq ($(CONFIG_GENEVN_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-genevn-evb.dtbo
 endif
+ifeq ($(CONFIG_AVATRN_DTB),y)
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-avatrn-evb.dtbo
+endif
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-geneva-evb.dtbo
 endif
 
+#remove useless qcom device tree in moto build
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtbo-$(CONFIG_ARCH_RAVELIN) += ravelin-audio.dtbo \
                  ravelin-audio-idp.dtbo \
                  ravelin-audio-idp-wsa-hac.dtbo \
                  ravelin-audio-idp-4gb.dtbo \
                  ravelin-audio-qrd.dtbo \
                  ravelin-audio-atp.dtbo
+endif
 
 #remove useless qcom device tree in moto build
 ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)

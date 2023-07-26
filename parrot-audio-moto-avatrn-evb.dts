@@ -1,0 +1,10 @@
+/dts-v1/;
+/plugin/;
+
+#include "parrot-audio-moto-avatrn-common.dtsi"
+/{
+	model = "avatrn";
+	compatible = "qcom,parrot-qrd", "qcom,parrot", "qcom,qrd", "moto,avatrn";
+	qcom,msm-id = <613 0x10000>;
+	qcom,board-id = <0x41 0xA100>;
+};
