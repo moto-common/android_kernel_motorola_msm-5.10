@@ -63,6 +63,10 @@ ifeq ($(CONFIG_BOSTON_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-boston-evb.dtbo
 endif
+ifeq ($(CONFIG_CUSCO_DTB),y)
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-cusco-evb.dtbo
+endif
 ifeq ($(CONFIG_AVATRN_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-avatrn-evb.dtbo
