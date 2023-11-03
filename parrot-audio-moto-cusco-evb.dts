@@ -1,7 +1,7 @@
 /dts-v1/;
 /plugin/;
 
-#include "parrot-audio-moto-genevn-common.dtsi"
+#include "parrot-cuso-audio-overlay.dtsi"
 /{
 	model = "cusco";
 	compatible = "qcom,parrot-qrd", "qcom,parrot", "qcom,qrd", "moto,cusco";
