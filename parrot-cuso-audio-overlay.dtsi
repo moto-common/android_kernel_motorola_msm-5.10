@@ -374,7 +374,10 @@
 
 &spf_core_platform  {
 	waipio_snd: sound {
-		qcom,model = "parrot-idp-snd-card";
+		qcom,model = "parrot-qrd-snd-card";
+		qcom,sku-model = "parrot-qrd-sku1-snd-card";
+		nvmem-cells = <&adsp_variant>;
+		nvmem-cell-names = "adsp_variant";
 		qcom,msm-mi2s-master = <1>, <1>, <1>, <1>, <1>, <1>;
 		qcom,mi2s-tdm-is-hw-vote-needed = <1>, <0>, <1>, <0>, <0>, <0>;
 		qcom,tdm-max-slots = <8>;
