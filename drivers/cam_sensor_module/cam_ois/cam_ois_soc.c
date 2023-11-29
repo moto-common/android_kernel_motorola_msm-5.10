@@ -41,6 +41,16 @@ static int cam_ois_get_dt_data(struct cam_ois_ctrl_t *o_ctrl)
   		o_ctrl->is_ois_vsync_irq_supported = true;
   	}
 #endif
+
+#ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
+	if (!of_property_read_bool(of_node, "af-drift-support")) {
+		o_ctrl->af_drift_supported = false;
+	} else {
+		o_ctrl->af_drift_supported = true;
+	}
+	CAM_WARN(CAM_OIS, "af-drift-support %d", o_ctrl->af_drift_supported);
+#endif
+
 	rc = of_property_read_string(of_node, "ois-name", &o_ctrl->ic_name);
 	if (rc) {
 		CAM_DBG(CAM_OIS, "ois-name is not available in the node: %d", rc);

@@ -27,17 +27,7 @@ extern int dw9784_check_if_download(struct camera_io_master * io_master_info);
 extern int aw86006_firmware_update(struct cam_ois_ctrl_t *o_ctrl, const struct firmware *fw);
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
-int m_ois_init = 0;
-
-int cam_ois_get_init_info(void)
-{
-	return m_ois_init;
-}
-
-static void cam_ois_set_init_info(int value)
-{
-	m_ois_init = value;
-}
+atomic_t m_ois_init = ATOMIC_INIT(0);
 #endif
 
 int32_t cam_ois_construct_default_power_setting(
@@ -244,8 +234,9 @@ static int cam_ois_power_down(struct cam_ois_ctrl_t *o_ctrl)
 	CAM_INFO(CAM_OIS, "OIS power down successed");
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
-	if (strstr(o_ctrl->ois_name, "dw9784"))
-		cam_ois_set_init_info(0);
+	if (o_ctrl->af_drift_supported == true) {
+		atomic_set(&m_ois_init, 0);
+	}
 #endif
 
 	camera_io_release(&o_ctrl->io_master_info);
@@ -977,8 +968,9 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		}
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
-		if (strstr(o_ctrl->ois_name, "dw9784"))
-			cam_ois_set_init_info(1);
+		if (o_ctrl->af_drift_supported == true) {
+			atomic_set(&m_ois_init, 1);
+		}
 #endif
 
 		if (o_ctrl->is_ois_calib) {

@@ -49,7 +49,7 @@ int32_t cam_actuator_parse_dt(struct cam_actuator_ctrl_t *a_ctrl,
 	} else {
 		a_ctrl->af_drift_supported = true;
 	}
-	CAM_DBG(CAM_ACTUATOR, "af-drift-support %d", a_ctrl->af_drift_supported);
+	CAM_WARN(CAM_ACTUATOR, "af-drift-support %d", a_ctrl->af_drift_supported);
 #endif
 
 	if (a_ctrl->io_master_info.master_type == CCI_MASTER) {

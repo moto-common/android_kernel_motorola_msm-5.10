@@ -24,7 +24,7 @@ int cam_ois_write_af_drift(uint32_t dac)
 	int rc = 0;
 
 	if (!o_ctrl) {
-		CAM_ERR(CAM_OIS, "invalid args");
+		CAM_ERR(CAM_OIS, "Invalid o_ctrl args");
 		return -EINVAL;
 	}
 
@@ -37,11 +37,11 @@ int cam_ois_write_af_drift(uint32_t dac)
 
 	rc = camera_io_dev_write(&(o_ctrl->io_master_info), &(i2c_reg_setting));
 	if (rc < 0) {
-		CAM_ERR(CAM_OIS, "fail in applying i2c wrt settings");
+		CAM_ERR(CAM_OIS, "Failed in applying i2c write settings");
 		return -EINVAL;
 	}
 
-	CAM_DBG(CAM_OIS,"write af-drift success 0x%x", dac);
+	CAM_DBG(CAM_OIS,"Write af-drift success 0x%x", dac);
 	return rc;
 }
 #endif
@@ -678,7 +678,10 @@ static int cam_ois_component_bind(struct device *dev,
 	o_ctrl->cam_ois_state = CAM_OIS_INIT;
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
-	g_o_ctrl = o_ctrl;
+	if (o_ctrl->af_drift_supported == true)
+	{
+		g_o_ctrl = o_ctrl;
+	}
 #endif
 
 #ifdef CONFIG_DONGWOON_OIS_VSYNC

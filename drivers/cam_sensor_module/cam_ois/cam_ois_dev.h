@@ -214,6 +214,9 @@ struct cam_ois_ctrl_t {
 	bool is_video_mode;
 	bool is_need_eis_data;
 #endif
+#ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
+	bool af_drift_supported;
+#endif
 };
 
 /**

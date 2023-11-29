@@ -17,7 +17,7 @@
 #endif
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
-extern int cam_ois_get_init_info(void);
+extern atomic_t m_ois_init;
 extern int cam_ois_write_af_drift(uint32_t dac);
 #endif
 
@@ -307,7 +307,7 @@ int32_t cam_actuator_apply_settings(struct cam_actuator_ctrl_t *a_ctrl,
 
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
 			if (a_ctrl->af_drift_supported == true &&
-				(cam_ois_get_init_info() == 1) &&
+				(atomic_read(&m_ois_init) == 1) &&
 				i2c_list != NULL) {
 
 				#define ADDR_ACTUATOR 0x18
