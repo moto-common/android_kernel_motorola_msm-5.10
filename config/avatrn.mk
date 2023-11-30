@@ -8,4 +8,5 @@ ccflags-y += -DCONFIG_CCI_DEBUG_INTF=1
 endif
 
 ccflags-y += -DCONFIG_MOT_DONGWOON_OIS_AF_DRIFT=1
+ccflags-y += -DCONFIG_MOT_OIS_EARLY_UPGRADE_FW=1
 # Flags to pass into C preprocessor

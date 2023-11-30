@@ -64,6 +64,9 @@ enum cam_ois_packet_opcodes {
 	CAM_OIS_PACKET_OPCODE_INIT,
 	CAM_OIS_PACKET_OPCODE_OIS_CONTROL,
 	CAM_OIS_PACKET_OPCODE_READ,
+#ifdef CONFIG_MOT_OIS_EARLY_UPGRADE_FW
+	CAM_OIS_PACKET_OPCODE_OIS_FW_UPGRADE,
+#endif
 #ifdef CONFIG_MOT_OIS_AF_DRIFT
 	CAM_OIS_PACKET_OPCODE_AF_DRIFT,
 #endif
@@ -327,6 +330,9 @@ struct cam_cmd_ois_info {
 	__u8                  i2c_freq_mode;
 	__u8                  cmd_type;
 	__u8                  ois_fw_flag;
+#ifdef CONFIG_MOT_OIS_EARLY_UPGRADE_FW
+	__u8                  ois_early_fw_flag;
+#endif
 	__u8                  is_ois_calib;
 	__u8                  ois_preprog_flag;
 	__u8                  ois_precoeff_flag;

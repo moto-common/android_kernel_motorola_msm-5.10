@@ -384,6 +384,9 @@ static int cam_ois_slaveInfo_pkt_parser(struct cam_ois_ctrl_t *o_ctrl,
 		o_ctrl->io_master_info.cci_client->sid =
 			ois_info->slave_addr >> 1;
 		o_ctrl->ois_fw_flag = ois_info->ois_fw_flag;
+#ifdef CONFIG_MOT_OIS_EARLY_UPGRADE_FW
+		o_ctrl->ois_early_fw_flag = ois_info->ois_early_fw_flag;
+#endif
 		o_ctrl->ois_preprog_flag = ois_info->ois_preprog_flag;
 		o_ctrl->ois_precoeff_flag = ois_info->ois_precoeff_flag;
 		o_ctrl->is_ois_calib = ois_info->is_ois_calib;
@@ -1040,6 +1043,91 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 			rc = 0;
 		}
 		break;
+#ifdef CONFIG_MOT_OIS_EARLY_UPGRADE_FW
+	case CAM_OIS_PACKET_OPCODE_OIS_FW_UPGRADE:
+	{
+		CAM_INFO(CAM_OIS, "CAM_OIS_PACKET_OPCODE_OIS_FW_UPGRADE");
+		offset = (uint32_t *)&csl_packet->payload;
+		offset += (csl_packet->cmd_buf_offset / sizeof(uint32_t));
+		cmd_desc = (struct cam_cmd_buf_desc *)(offset);
+
+		CAM_INFO(CAM_OIS, "num_cmd_buf %d", csl_packet->num_cmd_buf);
+
+		/* Loop through multiple command buffers */
+		for (i = 0; i < csl_packet->num_cmd_buf; i++) {
+			total_cmd_buf_in_bytes = cmd_desc[i].length;
+			if (!total_cmd_buf_in_bytes)
+				continue;
+
+			rc = cam_mem_get_cpu_buf(cmd_desc[i].mem_handle,
+				&generic_ptr, &len_of_buff);
+			if (rc < 0) {
+				CAM_ERR(CAM_OIS, "Failed to get cpu buf : 0x%x",
+					cmd_desc[i].mem_handle);
+				return rc;
+			}
+			cmd_buf = (uint32_t *)generic_ptr;
+			if (!cmd_buf) {
+				CAM_ERR(CAM_OIS, "invalid cmd buf");
+				return -EINVAL;
+			}
+
+			if ((len_of_buff < sizeof(struct common_header)) ||
+				(cmd_desc[i].offset > (len_of_buff -
+				sizeof(struct common_header)))) {
+				CAM_ERR(CAM_OIS, "Invalid length for sensor cmd");
+				return -EINVAL;
+			}
+			remain_len = len_of_buff - cmd_desc[i].offset;
+			cmd_buf += cmd_desc[i].offset / sizeof(uint32_t);
+			cmm_hdr = (struct common_header *)cmd_buf;
+
+			switch (cmm_hdr->cmd_type) {
+			case CAMERA_SENSOR_CMD_TYPE_I2C_INFO:
+			CAM_INFO(CAM_OIS, "CAMERA_SENSOR_CMD_TYPE_I2C_INFO");
+				rc = cam_ois_slaveInfo_pkt_parser(
+					o_ctrl, cmd_buf, remain_len);
+				if (rc < 0) {
+					CAM_ERR(CAM_OIS, "Failed in parsing slave info");
+					return rc;
+				}
+				break;
+			case CAMERA_SENSOR_CMD_TYPE_PWR_UP:
+			case CAMERA_SENSOR_CMD_TYPE_PWR_DOWN:
+				CAM_INFO(CAM_OIS, "Received power settings buffer");
+				rc = cam_sensor_update_power_settings(
+					cmd_buf,
+					total_cmd_buf_in_bytes,
+					power_info, remain_len);
+				if (rc) {
+					CAM_ERR(CAM_OIS, "Failed: parse power settings");
+					return rc;
+				}
+				break;
+			default:
+				CAM_INFO(CAM_OIS, "default cmd %d", cmm_hdr->cmd_type);
+				break;
+			}
+		}
+
+		if (o_ctrl->cam_ois_state != CAM_OIS_CONFIG) {
+			rc = cam_ois_power_up(o_ctrl);
+			if (rc) {
+				CAM_ERR(CAM_OIS, " OIS Power up failed");
+				return rc;
+			}
+			o_ctrl->cam_ois_state = CAM_OIS_CONFIG;
+		}
+
+		CAM_INFO(CAM_OIS, "ois_fw_flag %d, ois_early_fw_flag %d", o_ctrl->ois_fw_flag, o_ctrl->ois_early_fw_flag);
+		if (o_ctrl->ois_early_fw_flag == 1) {
+			CAM_INFO(CAM_OIS, "OIS early fw update enabled");
+			rc = cam_ois_fw_prog_download(o_ctrl);
+			return rc;
+		}
+	}
+	break;
+#endif
 	case CAM_OIS_PACKET_OPCODE_OIS_CONTROL:
 		if (o_ctrl->cam_ois_state < CAM_OIS_CONFIG) {
 			rc = -EINVAL;
