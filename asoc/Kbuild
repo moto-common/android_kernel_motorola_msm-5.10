@@ -177,7 +177,11 @@ else
 ifneq (,$(filter cusco%, $(TARGET_PRODUCT)))
 	MACHINE_OBJS += waipio-cusco-parrot.o
 else
+ifneq (,$(filter tank%, $(TARGET_PRODUCT)))
+	MACHINE_OBJS += waipio-diwali-tank.o
+else
 	MACHINE_OBJS += waipio.o
+endif
 endif
 endif
 endif
