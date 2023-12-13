@@ -361,6 +361,24 @@ struct fsm_dev *fsm_get_fsm_dev_by_id(int id)
 	return NULL;
 }
 
+static struct fsm_dev *fsm_get_fsm_dev_by_position(int pos_mask)
+{
+	fsm_config_t *cfg = fsm_get_config();
+	fsm_dev_t *fsm_dev;
+
+	if (!cfg || cfg->dev_count <= 0) {
+		return NULL;
+	}
+
+	list_for_each_entry(fsm_dev, &fsm_dev_list, list) {
+		if (fsm_dev && (pos_mask & fsm_dev->pos_mask)) {
+			return fsm_dev;
+		}
+	}
+
+	return NULL;
+}
+
 int fsm_reg_write(fsm_dev_t *fsm_dev, uint8_t reg, uint16_t val)
 {
 	int ret;
@@ -1157,6 +1175,9 @@ int fsm_config_vol(fsm_dev_t *fsm_dev)
 	}
 	// volume = (fsm_dev->state.calibrated ? cfg->volume : 0xDF); // -12dB
 	volume = cfg->volume;
+	if ((fsm_dev->pos_mask & FSM_POS_RCV) && cfg->ramp_vol != cfg->volume)
+		volume = cfg->ramp_vol;
+
 	if (fsm_dev->is19xx) {
 		volctrl = 0x7816;
 	} else {
@@ -1244,6 +1265,7 @@ int fsm_stub_dev_init(fsm_dev_t *fsm_dev)
 	}
 	ret |= fsm_get_rstrim(fsm_dev);
 	ret |= fsm_stub_shut_down(fsm_dev);
+	cfg->ramp_vol = cfg->volume;
 	fsm_dev->errcode = ret;
 
 	return ret;
@@ -1382,10 +1404,42 @@ void fsm_set_volume(int volume)
 		pr_warning("invalid volume: %d, default 0dB", volume);
 		volume = FSM_VOLUME_MAX;
 	}
+	if (cfg->volume == cfg->ramp_vol)
+		cfg->ramp_vol = volume;
 	cfg->volume = volume;
 	if (!cfg->stream_muted) {
 		fsm_list_func(fsm_dev, fsm_config_vol);
 	}
+	fsm_mutex_unlock();
+}
+
+void fsm_set_ramp_volume(int volume)
+{
+	fsm_config_t *cfg = fsm_get_config();
+	fsm_dev_t *fsm_dev;
+
+	if (!cfg)
+		return;
+
+	fsm_mutex_lock();
+	if (volume < 0 || volume > FSM_VOLUME_MAX) {
+		pr_warning("invalid volume: %d, default 0dB", volume);
+		volume = FSM_VOLUME_MAX;
+	}
+
+	cfg->ramp_vol = volume;
+	if (cfg->stream_muted)
+		goto exit_unlock;
+
+	fsm_dev = fsm_get_fsm_dev_by_position(FSM_POS_RCV);
+	if (fsm_dev == NULL) {
+		pr_err("Failed to set ramp volume, NO RCV/Left PA");
+		goto exit_unlock;
+	}
+
+	fsm_config_vol(fsm_dev);
+
+exit_unlock:
 	fsm_mutex_unlock();
 }
 
@@ -1581,6 +1635,7 @@ void fsm_speaker_off(void)
 	fsm_list_func(fsm_dev, fsm_stub_shut_down);
 	cfg->speaker_on = false;
 	cfg->force_calib = false;
+	cfg->ramp_vol = cfg->volume;
 	pr_debug("done");
 	fsm_mutex_unlock();
 }

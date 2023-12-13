@@ -30,8 +30,8 @@
 //#define CONFIG_FSM_FS18YN
 
 /* VERSION INFORMATION */
-#define FSM_CODE_VERSION "v4.0.8-a"
-#define FSM_CODE_DATE    "20231110"
+#define FSM_CODE_VERSION "v4.0.9-a"
+#define FSM_CODE_DATE    "20231208"
 #define FSM_GIT_BRANCH   ""
 #define FSM_GIT_COMMIT   ""
 
@@ -262,6 +262,7 @@ enum dev_id_index {
 #define FSM_POS_LBTM BIT(2)
 #define FSM_POS_RTOP BIT(1)
 #define FSM_POS_RBTM BIT(0)
+#define FSM_POS_RCV (FSM_POS_LTOP | FSM_POS_LBTM)
 
 //#undef NULL
 //#define NULL ((void *)0)
@@ -573,6 +574,7 @@ struct fsm_config {
 	uint16_t freq_count;
 	uint16_t volume;
 	uint16_t amb_tempr;
+	uint16_t ramp_vol;
 	uint16_t state     : 8;
 	uint16_t wait_type : 8;
 	uint16_t tx_fmt    : 8;

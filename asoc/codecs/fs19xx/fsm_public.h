@@ -241,6 +241,7 @@ void fsm_set_i2s_clocks(uint32_t rate, uint32_t bclk);
 void fsm_set_tx_format(uint32_t format);
 void fsm_set_scene(int scene);
 void fsm_set_volume(int volume);
+void fsm_set_ramp_volume(int volume);
 void fsm_set_cfg_flag(int pos, int mark);
 void fsm_init(void);
 void fsm_speaker_onn(void);

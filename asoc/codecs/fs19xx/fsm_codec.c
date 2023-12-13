@@ -119,6 +119,30 @@ int fsm_volume_put(struct snd_kcontrol *kcontrol,
 	return 0;
 }
 
+static int fsm_ramp_volume_get(struct snd_kcontrol *kcontrol,
+			struct snd_ctl_elem_value *ucontrol)
+{
+	fsm_config_t *cfg = fsm_get_config();
+	int volume;
+
+	volume = cfg ? cfg->ramp_vol: FSM_VOLUME_MAX;
+	ucontrol->value.integer.value[0] = volume;
+	pr_info("volume: %d", volume);
+
+	return 0;
+}
+
+static int fsm_ramp_volume_put(struct snd_kcontrol *kcontrol,
+			struct snd_ctl_elem_value *ucontrol)
+{
+	int volume = ucontrol->value.integer.value[0];
+
+	pr_info("volume: %d", volume);
+	fsm_set_ramp_volume(volume);
+
+	return 0;
+}
+
 int fsm_stop_get(struct snd_kcontrol *kcontrol,
 			struct snd_ctl_elem_value *ucontrol)
 {
@@ -202,6 +226,8 @@ static const struct snd_kcontrol_new fsm_snd_controls[] =
 			fsm_stop_get, fsm_stop_put),
 	SOC_SINGLE_EXT("FSM_Rotation", SND_SOC_NOPM, 0, 360, 0,
 			fsm_rotation_get, fsm_rotation_put),
+	SOC_SINGLE_EXT("FSM_Ramp_Volume", SND_SOC_NOPM, 0, FSM_VOLUME_MAX, 0,
+			fsm_ramp_volume_get, fsm_ramp_volume_put),
 };
 
 static struct snd_soc_dapm_widget fsm_dapm_widgets_common[] =
