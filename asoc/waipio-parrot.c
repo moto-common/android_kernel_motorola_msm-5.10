@@ -87,6 +87,8 @@ static struct snd_soc_card snd_soc_card_waipio_msm;
 static int dmic_0_1_gpio_cnt;
 static int dmic_2_3_gpio_cnt;
 static int dmic_4_5_gpio_cnt;
+static bool is_hac_enable;
+static int hac_enable_pin;
 
 static void *def_wcd_mbhc_cal(void);
 
@@ -118,6 +120,39 @@ static struct wcd_mbhc_config wcd_mbhc_cfg = {
 	.anc_micbias = MIC_BIAS_2,
 	.enable_anc_mic_detect = false,
 	.moisture_duty_cycle_en = true,
+};
+
+static const char *const hac_enable_text[] = {"Off", "On"};
+static SOC_ENUM_SINGLE_EXT_DECL(hac_enable, hac_enable_text);
+
+static int hac_enable_get(struct snd_kcontrol *kcontrol,
+			struct snd_ctl_elem_value *ucontrol)
+{
+	ucontrol->value.integer.value[0] = is_hac_enable;
+	return 0;
+}
+
+static int hac_enable_set(struct snd_kcontrol *kcontrol,
+			struct snd_ctl_elem_value *ucontrol)
+{
+	switch (ucontrol->value.integer.value[0]) {
+	case 0:
+		gpio_direction_output(hac_enable_pin, 0);
+		is_hac_enable = 0;
+		break;
+	case 1:
+		gpio_direction_output(hac_enable_pin, 1);
+		is_hac_enable = 1;
+		break;
+	default:
+		return -EINVAL;
+	}
+	return 0;
+}
+
+static const struct snd_kcontrol_new msm_snd_hac_controls[] = {
+	SOC_ENUM_EXT("HAC Enable", hac_enable, hac_enable_get,
+			hac_enable_set),
 };
 
 static bool msm_usbc_swap_gnd_mic(struct snd_soc_component *component, bool active)
@@ -167,6 +202,15 @@ static void msm_parse_upd_configuration(struct platform_device *pdev,
 	if (ret) {
 		pr_debug("%s: could not find %s entry in dt\n",
 			__func__, "qcom,upd_ear_pa_reg_addr");
+	}
+
+	hac_enable_pin = of_get_named_gpio(pdev->dev.of_node,
+			"qcom,hac_enable", 0);
+	if (hac_enable_pin < 0) {
+		pr_err("missing %d in dt node\n", hac_enable_pin);
+	}
+	if (!gpio_is_valid(hac_enable_pin)) {
+		pr_err("Invalid hac_enable gpio: %d", hac_enable_pin);
 	}
 }
 
@@ -1332,6 +1376,9 @@ static int msm_snd_card_late_probe(struct snd_soc_card *card)
 			__func__, ret);
 		goto err_hs_detect;
 	}
+	snd_soc_add_component_controls(component, msm_snd_hac_controls,
+				   ARRAY_SIZE(msm_snd_hac_controls));
+
 	return 0;
 
 err_hs_detect:
