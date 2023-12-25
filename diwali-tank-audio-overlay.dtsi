@@ -91,9 +91,9 @@
 		monitor-mode = "hal_monitor";
 		status = "okay";
 	};
-	aw882xxacf_spk: aw882xx_smartpa@35 { /* SPKL */
+	aw882xxacf_spk: aw882xx_smartpa@36 { /* SPKL */
 		compatible = "awinic,aw882xx_smartpa";
-		reg = <0x35>;
+		reg = <0x36>;
 		irq-gpio = <&tlmm 53 0x2008>;
 		sound-channel = <1>; /*0:pri_l 1:pri_r 2:sec_l 3:sec_r*/
 		aw-re-min = <4000>;
