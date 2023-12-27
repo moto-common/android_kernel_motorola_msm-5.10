@@ -434,7 +434,7 @@ static int fsm_parse_dts(struct i2c_client *i2c, fsm_dev_t *fsm_dev)
 	fsm_dev->irq_gpio = of_get_named_gpio(np, "fsm,irq-gpio", 0);
 	if (gpio_is_valid(fsm_dev->irq_gpio)) {
 		ret = devm_gpio_request_one(&i2c->dev, fsm_dev->irq_gpio,
-			GPIOF_OUT_INIT_LOW, "FS19XX_IRQ");
+			GPIOF_DIR_IN, "FS19XX_IRQ");
 		if (ret)
 			return ret;
 	}
@@ -532,15 +532,17 @@ static int fsm_i2c_probe(struct i2c_client *i2c,
 	fsm_set_fw_name(FSM_FW_NAME);
 #endif
 	if(fsm_dev->id == 0) {
-#ifdef CONFIG_FSM_MTK
-		dev_set_name(&i2c->dev, "fs16xx");
-#endif
+//#ifdef CONFIG_FSM_MTK
+//		dev_set_name(&i2c->dev, "fs16xx");
+//#endif
 		// reigster only in the first device
+		dev_set_name(&i2c->dev, "fs16xx_%d", fsm_dev->id);
 #if !defined(CONFIG_FSM_CODEC)
 		fsm_set_pdev(&i2c->dev);
 #endif
 		fsm_misc_init();
 		fsm_codec_register(&i2c->dev, fsm_dev->id);
+		dev_set_name(&i2c->dev, "%d-%04x", i2c->adapter->nr, i2c->addr);
 		fsm_monitor_init(&i2c->dev);
 	}
 
