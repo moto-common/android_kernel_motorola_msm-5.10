@@ -67,7 +67,7 @@ typedef unsigned long int aw_uint32;
 
 static char *profile_name[AW_PROFILE_MAX] = {
 	"Music", "Voice", "Voip", "Ringtone", "Ringtone_hs",
-	"Lowpower", "Bypass", "Mmi", "Fm", "Notification", "Receiver"
+	"Lowpower", "Bypass", "Mmi", "Fm", "Notification", "Receiver", "HAC"
 };
 
 static int aw_parse_bin_header_1_0_0(struct aw_bin *bin);
