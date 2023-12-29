@@ -92,6 +92,10 @@ else ifneq (,$(filter cusco, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/cusco.mk
 else ifneq (,$(filter cusco_factory, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/cusco_factory.mk
+else ifneq (,$(filter tank, $(TARGET_PRODUCT)))
+include $(CAMERA_KERNEL_ROOT)/config/tank.mk
+else ifneq (,$(filter tank_factory, $(TARGET_PRODUCT)))
+include $(CAMERA_KERNEL_ROOT)/config/tank_factory.mk
 endif
 
 # List of all camera-kernel headers

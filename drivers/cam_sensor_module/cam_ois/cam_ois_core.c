@@ -30,6 +30,10 @@ extern int aw86006_firmware_update(struct cam_ois_ctrl_t *o_ctrl, const struct f
 atomic_t m_ois_init = ATOMIC_INIT(0);
 #endif
 
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+int g_ois_init_finished = 0;
+#endif
+
 int32_t cam_ois_construct_default_power_setting(
 	struct cam_sensor_power_ctrl_t *power_info)
 {
@@ -237,6 +241,9 @@ static int cam_ois_power_down(struct cam_ois_ctrl_t *o_ctrl)
 	if (o_ctrl->af_drift_supported == true) {
 		atomic_set(&m_ois_init, 0);
 	}
+#endif
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+		g_ois_init_finished = 0;
 #endif
 
 	camera_io_release(&o_ctrl->io_master_info);
@@ -975,7 +982,10 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 			atomic_set(&m_ois_init, 1);
 		}
 #endif
-
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+		g_ois_init_finished = 1;
+		CAM_DBG(CAM_OIS, "g_ois_init_finished: %d", g_ois_init_finished);
+#endif
 		if (o_ctrl->is_ois_calib) {
 			rc = cam_ois_apply_settings(o_ctrl,
 				&o_ctrl->i2c_calib_data);

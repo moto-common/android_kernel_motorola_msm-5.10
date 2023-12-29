@@ -21,6 +21,10 @@ extern atomic_t m_ois_init;
 extern int cam_ois_write_af_drift(uint32_t dac);
 #endif
 
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+extern int g_ois_init_finished;
+#endif
+
 int32_t cam_actuator_construct_default_power_setting(
 	struct cam_sensor_power_ctrl_t *power_info)
 {
@@ -272,6 +276,14 @@ int32_t cam_actuator_apply_settings(struct cam_actuator_ctrl_t *a_ctrl,
 #ifdef CONFIG_MOT_DONGWOON_OIS_AF_DRIFT
 	struct cam_sensor_i2c_reg_setting * i2c_reg = NULL;
 	uint32_t dac = 0;
+#endif
+
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+	if (a_ctrl->af_ois_use_same_ic == true &&
+		g_ois_init_finished == 0) {
+			CAM_INFO(CAM_ACTUATOR, "OIS does NOT finish to init, skip writed AF setting to avoid break AF function");
+			return 0;
+	}
 #endif
 
 	if (a_ctrl == NULL || i2c_set == NULL) {

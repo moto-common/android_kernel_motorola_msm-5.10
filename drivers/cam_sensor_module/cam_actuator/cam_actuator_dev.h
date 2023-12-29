@@ -121,6 +121,9 @@ struct cam_actuator_ctrl_t {
 #ifdef CONFIG_AF_NOISE_ELIMINATION
 	bool is_multi_user_supported;
 #endif
+#ifdef CONFIG_MOT_OIS_DW9784_DRIVER
+	bool af_ois_use_same_ic;
+#endif
 };
 
 /**
