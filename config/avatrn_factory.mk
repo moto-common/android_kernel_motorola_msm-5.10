@@ -9,4 +9,6 @@ endif
 
 ccflags-y += -DCONFIG_MOT_DONGWOON_OIS_AF_DRIFT=1
 ccflags-y += -DCONFIG_MOT_OIS_EARLY_UPGRADE_FW=1
+ccflags-y += -DCONFIG_MOT_CUSTOM_CTLE_PARAM=1
+ccflags-y += -DCONFIG_MOT_SM7435_AVATRN=1
 # Flags to pass into C preprocessor
