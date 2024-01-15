@@ -276,6 +276,41 @@ static int cam_ois_update_time(struct i2c_settings_array *i2c_set)
 		&(i2c_set->list_head), list) {
 		if (i2c_list->op_code ==  CAM_SENSOR_I2C_WRITE_SEQ) {
 			size = i2c_list->i2c_settings.size;
+#ifdef CONFIG_MOT_OIS_DW9784_ACTIVE_OIS
+			if (size * (uint32_t)(i2c_list->i2c_settings.data_type) != 8) {
+				CAM_ERR(CAM_OIS, "Invalid write time settings");
+				return -EINVAL;
+			}
+			switch (i2c_list->i2c_settings.data_type) {
+			case CAMERA_SENSOR_I2C_TYPE_BYTE:
+				for (i = 0; i < size; i++) {
+					CAM_DBG(CAM_OIS, "time: reg_data[%d]: 0x%x",
+						i, (qtime_ns & 0xFF));
+					i2c_list->i2c_settings.reg_setting[i].reg_data =
+						(qtime_ns & 0xFF);
+					qtime_ns >>= 8;
+				}
+
+				break;
+			case CAMERA_SENSOR_I2C_TYPE_WORD:
+				for (i = 0; i < size; i++) {
+					uint16_t  data = (qtime_ns & 0xFFFF);
+
+					i2c_list->i2c_settings.reg_setting[size-i-1].reg_data =
+						data;
+
+					qtime_ns >>= 16;
+
+					CAM_DBG(CAM_OIS, "time: reg_data[%d]: 0x%x",
+							size-i-1, data);
+				}
+
+				break;
+			default:
+				CAM_ERR(CAM_OIS, "Unsupported reg data type");
+				return -EINVAL;
+			}
+#else
 			/* qtimer is 8 bytes so validate here*/
 			if (size < 8) {
 				CAM_ERR(CAM_OIS, "Invalid write time settings");
@@ -288,6 +323,7 @@ static int cam_ois_update_time(struct i2c_settings_array *i2c_set)
 					(qtime_ns & 0xFF);
 				qtime_ns >>= 8;
 			}
+#endif
 		}
 	}
 
@@ -1514,6 +1550,10 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 			CAM_ERR(CAM_OIS, "Cannot apply mode settings");
 			return rc;
 		}
+
+#ifdef CONFIG_MOT_OIS_DW9784_ACTIVE_OIS
+		mdelay(1);
+#endif
 
 		rc = delete_request(i2c_reg_settings);
 		if (rc < 0) {
