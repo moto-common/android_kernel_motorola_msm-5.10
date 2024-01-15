@@ -270,6 +270,7 @@ int fs19xx_shut_down(fsm_dev_t *fsm_dev)
 	}
 	ret = fsm_reg_write(fsm_dev, REG(FS19XX_DACCTRL), 0x0310);
 	ret |= fsm_reg_write(fsm_dev, REG(FS19XX_PWRCTRL), 0x0001);
+	fsm_delay_ms(35);
 	ret |= fsm_reg_write(fsm_dev, REG(FS19XX_SYSCTRL), 0x0000);
 
 	return ret;
