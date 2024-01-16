@@ -88,9 +88,9 @@ else ifneq (,$(filter boston, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/boston.mk
 else ifneq (,$(filter boston_factory, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/boston_factory.mk
-else ifneq (,$(filter cusco, $(TARGET_PRODUCT)))
+else ifneq (,$(filter cusco cuscoi, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/cusco.mk
-else ifneq (,$(filter cusco_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter cusco_factory cuscoi_factory, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/cusco_factory.mk
 else ifneq (,$(filter tank, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/tank.mk
