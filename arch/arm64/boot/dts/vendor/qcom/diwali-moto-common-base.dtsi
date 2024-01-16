@@ -1,0 +1,61 @@
+/* Copyright (c) 2022, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+
+#include "diwali.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. Diwali SoC";
+	compatible = "qcom,diwali";
+	qcom,board-id = <0 0>;
+	channel-id-map = "";
+/*
+ * Some nodes need labels assigned to appear in __symbols__
+ */
+	chosen: chosen { };
+	aliases: aliases { };
+	reserved_memory: reserved-memory { };
+	mot_batterydata: qcom,battery-data { };
+	utags: utags { };
+	hw: hw { };
+};
+
+&reserved_memory {
+	/delete-node/ ramoops_region;
+};
+
+&firmware {
+	android {
+		/delete-node/ fstab;
+	};
+};
+
+/delete-node/ &mem_offline;
+
+&gcc {
+	clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>,
+		<&pcie_0_pipe_clk>, <&ufs_phy_rx_symbol_0_clk>,
+		<&ufs_phy_rx_symbol_1_clk>, <&ufs_phy_tx_symbol_0_clk>,
+		<&usb3_phy_wrapper_gcc_usb30_pipe_clk>;
+	clock-names = "bi_tcxo", "sleep_clk",
+		"pcie_0_pipe_clk", "ufs_phy_rx_symbol_0_clk",
+		"ufs_phy_rx_symbol_1_clk", "ufs_phy_tx_symbol_0_clk",
+		"usb3_phy_wrapper_gcc_usb30_pipe_clk";
+
+	/delete-property/ protected-clocks;
+};
+
+&gcc_pcie_0_gdsc {
+	parent-supply = <&VDD_CX_LEVEL>;
+	status = "ok";
+};
