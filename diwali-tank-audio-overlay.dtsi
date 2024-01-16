@@ -79,7 +79,7 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
-	aw882xxacf_rcv: aw882xx_smartpa@34 { /* SPKR */
+	aw882xxacf_rcv: aw882xx_smartpa@34 { /* SPKL */
 		compatible = "awinic,aw882xx_smartpa";
 		reg = <0x34>;
 		irq-gpio = <&tlmm 52 0x2008>;
@@ -91,7 +91,7 @@
 		monitor-mode = "hal_monitor";
 		status = "okay";
 	};
-	aw882xxacf_spk: aw882xx_smartpa@36 { /* SPKL */
+	aw882xxacf_spk: aw882xx_smartpa@36 { /* SPKR */
 		compatible = "awinic,aw882xx_smartpa";
 		reg = <0x36>;
 		irq-gpio = <&tlmm 53 0x2008>;
@@ -181,7 +181,7 @@
 		      <&aw882xxacf_rcv>, <&aw882xxacf_spk>;
 	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
 			   "wcd937x_codec", "swr-haptics",
-			   "aw882xx_smartpa.0-0034", "aw882xx_smartpa.0-0035";
+			   "aw882xx_smartpa.0-0034", "aw882xx_smartpa.0-0036";
 	qcom,wsa-max-devs = <0>;
 	fsa4480-i2c-handle = <&fsa4480>;
 };
