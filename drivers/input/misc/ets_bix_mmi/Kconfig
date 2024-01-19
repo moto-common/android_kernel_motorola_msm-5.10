@@ -1,0 +1,23 @@
+config EGIS_PANEL_NOTIFICATIONS
+	bool "EGIS Panel Notifications"
+	depends on INPUT_EGIS_BIX_MMI
+	default n
+	help
+	  Say Y here to enable EGIS panel notifications.
+	  If unsure, say N.
+
+# Uncomment the following block if you have a specific configuration for ET721_FOD
+#config ET721_FOD
+#	bool "ET721 FOD"
+#	depends on TOUCHSCREEN_EGIS_BIX_MMI
+#	default n
+#	help
+#	  Say Y here to enable ET721 FOD.
+#	  If unsure, say N.
+
+config INPUT_EGIS_BIX_MMI
+	tristate "EGIS BIX fingerprint MMI"
+	default n
+	help
+	  Say Y here to build the EGIS BIX fingerprint MMI driver as a module.
+	  If unsure, say N.
