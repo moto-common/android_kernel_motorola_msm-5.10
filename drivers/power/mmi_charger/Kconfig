@@ -1,0 +1,15 @@
+config MMI_RECHARGER_HAWAO_MODE
+	bool "MMI Recharger Hawao Mode"
+	depends on MMI_CHARGER
+	default n
+	help
+	  Say Y here to enable MMI Recharger Hawao Mode.
+	  If unsure, say N.
+
+config MMI_CHARGER
+	tristate "MMI Charger"
+	depends on POWER_SUPPLY
+	default n
+	help
+	  Say Y here to build the MMI Charger driver as a module.
+	  If unsure, say N.
