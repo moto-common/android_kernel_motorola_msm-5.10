@@ -1,0 +1,30 @@
+config WIRELESS_CPS4035B
+	depends on QTI_GLINK_CHARGER
+	bool "Wireless Charger CPS4035B"
+	default n
+	help
+	  Say Y here to enable support for Wireless Charger CPS4035B.
+	  If unsure, say N.
+
+config WIRELESS_CPS4019
+	depends on QTI_GLINK_CHARGER
+	bool "Wireless Charger CPS4019"
+	default n
+	help
+	  Say Y here to enable support for Wireless Charger CPS4019.
+	  If unsure, say N.
+
+config SKIP_QTI_CHARGER_CONFIRMAION
+	depends on QTI_GLINK_CHARGER
+	bool "Skip QTI Charger Confirmation"
+	default n
+	help
+	  Say Y here to skip QTI charger confirmation.
+	  If unsure, say N.
+
+config QTI_GLINK_CHARGER
+	tristate "QTI GLINK Charger"
+	default n
+	help
+	  Say Y here to build the QTI GLINK Charger driver as a module.
+	  If unsure, say N.
