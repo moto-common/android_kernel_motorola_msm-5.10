@@ -1413,5 +1413,7 @@ config REGULATOR_QTI_OCP_NOTIFIER
 	  providing a more graceful recovery mechanism than resetting the entire
 	  system.
 
+source "drivers/regulator/wl2864c/Kconfig"
+
 endif
 
