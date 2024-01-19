@@ -529,4 +529,5 @@ source "drivers/misc/uacce/Kconfig"
 source "drivers/misc/hdcp/Kconfig"
 source "drivers/misc/pen/Kconfig"
 source "drivers/misc/sx937x/Kconfig"
+source "drivers/misc/utag/Kconfig"
 endmenu
