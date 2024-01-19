@@ -1,0 +1,23 @@
+config USE_MMI_CHARGER
+	bool "Use MMI Charger"
+	depends on QPNP_ADAPTIVE_CHARGE
+	default n
+	help
+	  Say Y here to enable the use of MMI Charger.
+	  If unsure, say N.
+
+config ADAPTIVE_TOLERANCE_OPTIMIZATION
+	bool "Adaptive Tolerance Optimization"
+	depends on QPNP_ADAPTIVE_CHARGE
+	default n
+	help
+	  Say Y here to enable adaptive tolerance optimization.
+	  If unsure, say N.
+
+config QPNP_ADAPTIVE_CHARGE
+	tristate "QPNP Adaptive Charge"
+	depends on INPUT
+	default n
+	help
+	  Say Y here to build the QPNP Adaptive Charge driver as a module.
+	  If unsure, say N.
