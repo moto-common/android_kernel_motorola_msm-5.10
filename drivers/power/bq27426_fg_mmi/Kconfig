@@ -1,0 +1,46 @@
+config ATL_4000MAH_8A_BATTERY_PROFILE
+	bool "ATL 4000mAh 8A Battery Profile"
+	depends on BQ27426_FG_MMI
+	default n
+	help
+	  Say Y here to enable support for the ATL 4000mAh 8A battery profile.
+	  If unsure, say N.
+
+config SCUD_4000MAH_8A_BATTERY_PROFILE
+	bool "SCUD 4000mAh 8A Battery Profile"
+	depends on BQ27426_FG_MMI
+	default n
+	help
+	  Say Y here to enable support for the SCUD 4000mAh 8A battery profile.
+	  If unsure, say N.
+
+config ATL_LS40_1545MAH_BATTERY_PROFILE
+	bool "ATL LS40 1545mAh Battery Profile"
+	depends on BQ27426_FG_MMI
+	default n
+	help
+	  Say Y here to enable support for the ATL LS40 1545mAh battery profile.
+	  If unsure, say N.
+
+config ATL_LS30_1255MAH_BATTERY_PROFILE
+	bool "ATL LS30 1255mAh Battery Profile"
+	depends on BQ27426_FG_MMI
+	default n
+	help
+	  Say Y here to enable support for the ATL LS30 1255mAh battery profile.
+	  If unsure, say N.
+
+config ATL_NM40_712MAH_BATTERY_PROFILE
+	bool "ATL NM40 712mAh Battery Profile"
+	depends on BQ27426_FG_MMI
+	default n
+	help
+	  Say Y here to enable support for the ATL NM40 712mAh battery profile.
+	  If unsure, say N.
+
+config BQ27426_FG_MMI
+	tristate "BQ27426 Fuel Gauge MMI"
+	default n
+	help
+	  Say Y here to build the BQ27426 Fuel Gauge MMI driver as a module.
+	  If unsure, say N.
