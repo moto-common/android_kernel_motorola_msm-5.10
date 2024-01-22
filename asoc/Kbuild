@@ -64,10 +64,6 @@ ifeq ($(KERNEL_BUILD), 0)
 	ifeq ($(CONFIG_ARCH_PARROT), y)
 		include $(AUDIO_ROOT)/config/waipioauto.conf
 		INCS    +=  -include $(AUDIO_ROOT)/config/waipioautoconf.h
-		ifneq (,$(filter avatr%, $(TARGET_PRODUCT)))
-			include $(AUDIO_ROOT)/config/avatrnauto.conf
-			INCS    +=  -include $(AUDIO_ROOT)/config/avatrnautoconf.h
-		endif
 	endif
 	ifeq ($(CONFIG_ARCH_LITO), y)
 		include $(AUDIO_ROOT)/config/litoauto.conf
