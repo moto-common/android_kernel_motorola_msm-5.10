@@ -1,35 +1,3 @@
-&tlmm {
-	aw882xx_hac_irq {
-		aw882xx_hac_sleep: aw882xx_hac_sleep {
-			mux {
-				pins = "gpio103";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio103";
-				drive-strength = <2>;   /* 2 mA */
-				bias-pull-down;
-				input-enable;
-			};
-		};
-
-		aw882xx_hac_active: aw882xx_hac_active {
-			mux {
-				pins = "gpio103";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio103";
-				drive-strength = <16>;  /* 16 mA */
-				bias-disable;
-				output-high;
-			};
-		};
-	};
-};
-
 &lpass_cdc {
 	qcom,num-macros = <3>;
 };
@@ -143,18 +111,6 @@
 		monitor-mode = "hal_monitor";
 		status = "okay";
 	};
-	aw882xxacf_hac: aw882xx_smartpa@36 { /* HAC */
-		compatible = "awinic,aw882xx_smartpa";
-		reg = <0x36>;
-		irq-gpio = <&tlmm 103 0x2008>;
-		sound-channel = <2>;
-		aw-re-min = <4000>;
-		aw-re-max= <30000>;
-		rename-flag = <1>;
-		aw-cali-mode = "none";
-		monitor-mode = "hal_monitor";
-		status = "okay";
-	};
 };
 
 &spf_core_platform {
@@ -224,12 +180,10 @@
 	/delete-property/ qcom,cdc-dmic45-gpios;
 	asoc-codec = <&stub_codec>, <&lpass_cdc>,
 		      <&wcd937x_codec>, <&swr_haptics>,
-		      <&aw882xxacf_spk>, <&aw882xxacf_rcv>,
-		      <&aw882xxacf_hac>;
+		      <&aw882xxacf_spk>, <&aw882xxacf_rcv>;
 	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
 			   "wcd937x_codec", "swr-haptics",
-			   "aw882xx_smartpa.0-0034", "aw882xx_smartpa.0-0035",
-			   "aw882xx_smartpa.0-0036";
+			   "aw882xx_smartpa.0-0034", "aw882xx_smartpa.0-0035";
 	qcom,wsa-max-devs = <0>;
 	fsa4480-i2c-handle = <&fsa4480>;
 };
