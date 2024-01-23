@@ -760,7 +760,8 @@ static int dp_ctrl_set_usb_redriver_eq(struct dp_ctrl_private *ctrl)
 
 const static char *monitor_balcklist [] = {
 	"P27h-30",
-	"P32p-30"
+	"P32p-30",
+	"Y27q-20"
 };
 
 static bool is_allow_downgrade(u8 *monitor_name)
