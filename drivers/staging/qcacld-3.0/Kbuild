@@ -4421,6 +4421,7 @@ else
 endif
 
 # Android wifi state control interface
+WLAN_CTRL_NAME := wlan
 ifneq ($(WLAN_CTRL_NAME),)
 ccflags-y += -DWLAN_CTRL_NAME=\"$(WLAN_CTRL_NAME)\"
 endif

@@ -245,8 +245,6 @@ void esoc_clink_unregister_rproc(struct esoc_clink *esoc_clink)
 
 int esoc_clink_request_ssr(struct esoc_clink *esoc_clink)
 {
-	if (esoc_clink->rproc->recovery_disabled)
-		panic("Panicking, remoterpoc %s crashed\n", esoc_clink->rproc->name);
 	rproc_report_crash(esoc_clink->rproc, RPROC_FATAL_ERROR);
 	return 0;
 }

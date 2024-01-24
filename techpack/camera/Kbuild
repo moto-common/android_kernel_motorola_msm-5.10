@@ -53,35 +53,25 @@ ifeq ($(CONFIG_ARCH_PARROT), y)
 include $(CAMERA_KERNEL_ROOT)/config/parrot.mk
 endif 
 
-ifneq (,$(filter hiphid hiphic hiphi hiphid_factory hiphic_factory hiphi_factory, $(TARGET_PRODUCT)))
+ifneq (,$(filter y,$(CONFIG_HIPHID_DTB) $(CONFIG_HIPHIC_DTB) $(CONFIG_HIPHI_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/hiphi.mk
-else ifneq (,$(filter li li_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_LI_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/li.mk
-else ifneq (,$(filter oneli oneli_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_ONELI_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/oneli.mk
-else ifneq (,$(filter eqs eqs_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_EQS_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/eqs.mk
-else ifneq (,$(filter bronco, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_BRONCO_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/bronco.mk
-else ifneq (,$(filter bronco_factory, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/bronco_factory.mk
-else ifneq (,$(filter felix felix_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_FELIX_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/felix.mk
-else ifneq (,$(filter zeekr, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_ZEEKR_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/zeekr.mk
-else ifneq (,$(filter zeekr_cn, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/zeekr.mk
-else ifneq (,$(filter zeekr_factory, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/zeekr_factory.mk
-else ifneq (,$(filter lynkco, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_LYNKCO_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/lynkco.mk
-else ifneq (,$(filter lynkco_cn, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/lynkco.mk
-else ifneq (,$(filter lynkco_factory, $(TARGET_PRODUCT)))
-include $(CAMERA_KERNEL_ROOT)/config/lynkco_factory.mk
-else ifneq (,$(filter geneva geneva_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_GENEVA_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/geneva.mk
-else ifneq (,$(filter genevn genevn_factory, $(TARGET_PRODUCT)))
+else ifneq (,$(filter y,$(CONFIG_GENEVN_DTB)))
 include $(CAMERA_KERNEL_ROOT)/config/genevn.mk
 else ifneq (,$(filter avatrn, $(TARGET_PRODUCT)))
 include $(CAMERA_KERNEL_ROOT)/config/avatrn.mk

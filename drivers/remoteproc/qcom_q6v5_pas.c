@@ -393,16 +393,12 @@ static int adsp_start(struct rproc *rproc)
 	scm_pas_enable_bw();
 	trace_rproc_qcom_event(dev_name(adsp->dev), "Q6_auth_reset", "enter");
 	ret = qcom_scm_pas_auth_and_reset(adsp->pas_id);
-	if (ret)
-		panic("Panicking, auth and reset failed for remoteproc %s\n", rproc->name);
 	scm_pas_disable_bw();
 	trace_rproc_qcom_event(dev_name(adsp->dev), "Q6_auth_reset", "exit");
 
 	if (!timeout_disabled) {
 		ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
-		if (rproc->recovery_disabled && ret) {
-			panic("Panicking, remoteproc %s failed to bootup.\n", adsp->rproc->name);
-		} else if (ret == -ETIMEDOUT) {
+		if (ret == -ETIMEDOUT) {
 			dev_err(adsp->dev, "start timed out\n");
 			goto disable_regs;
 		}
@@ -462,8 +458,6 @@ static int adsp_stop(struct rproc *rproc)
 		ret = qcom_scm_pas_shutdown_retry(adsp->pas_id);
 	else
 		ret = qcom_scm_pas_shutdown(adsp->pas_id);
-	if (ret)
-		panic("Panicking, remoteproc %s failed to shutdown.\n", rproc->name);
 
 	scm_pas_disable_bw();
 	adsp_pds_disable(adsp, adsp->active_pds, adsp->active_pd_count);

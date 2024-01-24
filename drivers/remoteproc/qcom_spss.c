@@ -270,7 +270,6 @@ static void clear_wdog(struct qcom_spss *spss)
 	dev_err(spss->dev, "wdog bite received from %s!\n", spss->rproc->name);
 	if (spss->rproc->recovery_disabled) {
 		spss->rproc->state = RPROC_CRASHED;
-		panic("Panicking, remoterpoc %s crashed\n", spss->rproc->name);
 	}
 
 	SPSS_CLEAR_IRQ(BIT(spss->bits_arr[ERR_READY]), spss);
@@ -356,8 +355,6 @@ static int spss_stop(struct rproc *rproc)
 	int ret;
 
 	ret = qcom_scm_pas_shutdown(spss->pas_id);
-	if (ret)
-		panic("Panicking, remoteproc %s failed to shutdown.\n", rproc->name);
 
 	mask_scsr_irqs(spss);
 
@@ -385,7 +382,6 @@ static int spss_attach(struct rproc *rproc)
 
 	if (rproc->recovery_disabled && !ret) {
 		dev_err(spss->dev, "%d ms timeout poked\n", SPSS_WAIT_TIMEOUT);
-		panic("Panicking, %s attach timed out\n", rproc->name);
 	} else if (!ret) {
 		dev_err(spss->dev, "recovery disabled (after timeout)\n");
 	}
@@ -423,15 +419,8 @@ static int spss_start(struct rproc *rproc)
 		goto disable_xo_clk;
 
 	ret = qcom_scm_pas_auth_and_reset(spss->pas_id);
-	if (ret)
-		panic("Panicking, auth and reset failed for remoteproc %s\n", rproc->name);
 
 	ret = spss_wait_for_start_done(spss);
-
-	if (rproc->recovery_disabled && !ret)
-		panic("Panicking, %s start timed out\n", rproc->name);
-	else if (!ret)
-		dev_err(spss->dev, "start timed out\n");
 
 	ret = ret ? 0 : -ETIMEDOUT;
 
