@@ -90,7 +90,6 @@ static void qcom_q6v5_crash_handler_work(struct work_struct *work)
 	 * sync() and fclose() on attempting the dump.
 	 */
 	msleep(100);
-	panic("Panicking, remoteproc %s crashed\n", q6v5->rproc->name);
 }
 
 static irqreturn_t q6v5_wdog_interrupt(int irq, void *data)

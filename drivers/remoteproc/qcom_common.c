@@ -633,17 +633,6 @@ EXPORT_SYMBOL_GPL(qcom_register_ssr_notifier);
 
 static void ssr_notif_timeout_handler(struct timer_list *t)
 {
-	struct qcom_rproc_ssr *ssr = from_timer(ssr, t, timer);
-
-	if (IS_ENABLED(CONFIG_QCOM_PANIC_ON_NOTIF_TIMEOUT) &&
-	    system_state != SYSTEM_RESTART &&
-	    system_state != SYSTEM_POWER_OFF &&
-	    system_state != SYSTEM_HALT &&
-	    !qcom_device_shutdown_in_progress)
-		panic(ssr_timeout_msg, ssr->info->name, subdevice_state_string[ssr->notification]);
-	else
-		WARN(1, ssr_timeout_msg, ssr->info->name,
-		     subdevice_state_string[ssr->notification]);
 }
 
 /**
@@ -786,7 +775,6 @@ static void qcom_check_ssr_status(void *data, struct rproc *rproc)
 	    system_state == SYSTEM_HALT)
 		return;
 
-	panic("Panicking, remoteproc %s failed to recover!\n", rproc->name);
 }
 
 static void rproc_recovery_notifier(void *data, struct rproc *rproc)

@@ -458,7 +458,9 @@ static int qti_charger_write(struct qti_charger *chg, u32 property,
 		goto out;
 	} else {
 		rc = 0;
+#ifdef BM_ULOG
 		bm_ulog_print_log(OEM_BM_ULOG_SIZE);
+#endif
 	}
 out:
 	mmi_dbg(chg, "Complete data write for property: %u\n", property);
@@ -600,9 +602,11 @@ static int qti_charger_get_batt_info(void *data, struct mmi_battery_info *batt_i
 	chg->batt_info.batt_fcc_ma = info.batt_fcc_ua / 1000;
 	memcpy(batt_info, &chg->batt_info, sizeof(struct mmi_battery_info));
 
+#ifdef BM_ULOG
 	if (batt_status != chg->batt_info.batt_status) {
 		bm_ulog_print_log(OEM_BM_ULOG_SIZE);
 	}
+#endif
 
 	return rc;
 }
@@ -743,7 +747,9 @@ static int qti_charger_get_chg_info(void *data, struct mmi_charger_info *chg_inf
 		qti_wireless_charge_dump_info(chg, wls_info);
 	}
 
+#ifdef BM_ULOG
 	bm_ulog_print_log(OEM_BM_ULOG_SIZE);
+#endif
 
 	return rc;
 }
@@ -2660,7 +2666,9 @@ static int qti_charger_init(struct qti_charger *chg)
 			   "Couldn't create wls_fod_gain\n");
 	}
 
+#ifdef BM_ULOG
 	bm_ulog_print_mask_log(BM_ALL, BM_LOG_LEVEL_INFO, OEM_BM_ULOG_SIZE);
+#endif
 
 	wireless_psy_init(chg);
 	create_debugfs_entries(chg);

@@ -162,12 +162,12 @@ endif
 
 # for WAIPIO sound card driver
 ifdef CONFIG_SND_SOC_WAIPIO
-ifneq (,$(filter ironmn%, $(TARGET_PRODUCT)))
+ifeq ($(CONFIG_IRONMN_DTB),y)
 	MACHINE_OBJS += waipio-ironmn.o
-else ifneq (,$(filter genev%, $(TARGET_PRODUCT)))
+else ifeq ($(CONFIG_GENEVN_DTB),y)
 	MACHINE_OBJS += waipio-parrot.o
 else
-ifneq (,$(filter felix%, $(TARGET_PRODUCT)))
+ifneq ($(CONFIG_FELIX_DTB),y)
 	MACHINE_OBJS += waipio-felix.o
 else
 	MACHINE_OBJS += waipio.o
