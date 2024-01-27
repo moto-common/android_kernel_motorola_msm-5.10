@@ -370,6 +370,7 @@
 
 &fsa4480 {
         status = "okay";
+        add-fsa4480-reset-probe = <1>;
 };
 
 &spf_core_platform  {
