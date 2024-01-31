@@ -37,7 +37,6 @@
 struct filter_action {
 	unsigned int code;		/* trigger key code */
 	unsigned int swap_code;		/* swap key code; if swap code is 0, then suppress */
-	bool condvar;			/* condition saved when key is pressed down */
 	bool (*condition)(void); 	/* check condition func returns true/false */
 					/* True - do action, False - ignore */
 	struct list_head link;
@@ -74,7 +73,7 @@ static irqreturn_t signal_gpio_irq(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
-unsigned int key_swap_algo(unsigned int code, unsigned state)
+unsigned int key_swap_algo(unsigned int code)
 {
 	struct filter_action *act;
 	bool condvar = true;
@@ -86,15 +85,10 @@ unsigned int key_swap_algo(unsigned int code, unsigned state)
 		if (code != act->code)
 			continue;
 
-		pr_debug("match: code = %u, state = %u\n", code, state);
+		pr_debug("match: code = %u\n", code);
 
 		if (act->condition) {
-			/* save condition when key is pressed */
-			if (state) {
-				condvar = act->condition();
-				act->condvar = condvar;
-			} else
-				condvar = act->condvar;
+			condvar = act->condition();
 			pr_debug("swap condition: %d\n", condvar);
 		}
 
