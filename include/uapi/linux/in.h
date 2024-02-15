@@ -169,6 +169,8 @@ struct in_addr {
 #define IP_DEFAULT_MULTICAST_TTL        1
 #define IP_DEFAULT_MULTICAST_LOOP       1
 
+typedef uint32_t in_addr_t;
+
 /* Request struct for multicast socket ops */
 
 #if __UAPI_DEF_IP_MREQ
