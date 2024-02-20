@@ -1079,7 +1079,6 @@ static void fps_panel_notifier_callback(enum panel_event_notifier_tag tag,
 		void *client_data)
 {
 	char *envp[2];
-	int ret;
 	struct egisfp_dev_t *egis_dev = client_data;
 
 	if (!notification) {
@@ -1112,7 +1111,7 @@ static void fps_panel_notifier_callback(enum panel_event_notifier_tag tag,
 		}
 		DEBUG_PRINT(" %s : screen_onoff = %d \n", __func__, egis_dev->screen_onoff);
 		envp[1] = NULL;
-		ret = kobject_uevent_env(&egis_dev->dd->dev.kobj, KOBJ_CHANGE, envp);
+		kobject_uevent_env(&egis_dev->dd->dev.kobj, KOBJ_CHANGE, envp);
 	}
 }
 #else

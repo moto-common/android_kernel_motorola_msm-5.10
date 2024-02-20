@@ -5693,6 +5693,7 @@ static int dwc3_msm_probe(struct platform_device *pdev)
 		goto put_dwc3;
 
 	mdwc->force_disconnect = false;
+	dwc3_start_stop_device(mdwc, true);
 	return 0;
 
 put_dwc3:
