@@ -199,8 +199,8 @@ int ili_fw_dump_iram_data(u32 start, u32 end, bool save)
 	struct file *f = NULL;
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0))
 	mm_segment_t old_fs;
-#endif
 	loff_t pos = 0;
+#endif
 	int i, ret = 0;
 	int len, tmp = debug_en;
 	bool ice = atomic_read(&ilits->ice_stat);
@@ -238,8 +238,8 @@ int ili_fw_dump_iram_data(u32 start, u32 end, bool save)
 			goto out;
 		}
 
-		pos = 0;
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0))
+		pos = 0;
 		old_fs = get_fs();
 		set_fs(get_ds());
 		set_fs(KERNEL_DS);
@@ -459,7 +459,7 @@ static int ilitek_fw_calc_file_crc(u8 *pfw)
 
 static int ilitek_tddi_fw_update_block_info(u8 *pfw)
 {
-	u32 ges_area_section = 0, ges_info_addr = 0, ges_fw_start = 0, ges_fw_end = 0;
+	u32 ges_info_addr = 0, ges_fw_start = 0, ges_fw_end = 0;
 	u32 ap_end = 0, ap_len = 0;
 	u32 fw_info_addr = 0, fw_mp_ver_addr = 0;
 
@@ -479,7 +479,6 @@ static int ilitek_tddi_fw_update_block_info(u8 *pfw)
 
 	/* Parsing gesture info form AP code */
 	ges_info_addr = (fbi[AP].end + 1 - 60);
-	ges_area_section = (pfw[ges_info_addr + 3] << 24) + (pfw[ges_info_addr + 2] << 16) + (pfw[ges_info_addr + 1] << 8) + pfw[ges_info_addr];
 	fbi[GESTURE].mem_start = (pfw[ges_info_addr + 7] << 24) + (pfw[ges_info_addr + 6] << 16) + (pfw[ges_info_addr + 5] << 8) + pfw[ges_info_addr + 4];
 	ap_end = (pfw[ges_info_addr + 11] << 24) + (pfw[ges_info_addr + 10] << 16) + (pfw[ges_info_addr + 9] << 8) + pfw[ges_info_addr + 8];
 
@@ -720,8 +719,8 @@ static int ilitek_tdd_fw_hex_open(u8 op, u8 *pfw)
 	struct file *f = NULL;
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0))
 	mm_segment_t old_fs;
-#endif
 	loff_t pos = 0;
+#endif
 
 	ILI_INFO("Open file method = %s, path = %s\n",
 		op ? "FILP_OPEN" : "REQUEST_FIRMWARE",
@@ -796,8 +795,8 @@ static int ilitek_tdd_fw_hex_open(u8 op, u8 *pfw)
 		}
 
 		/* ready to map user's memory to obtain data by reading files */
-		pos = 0;
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0))
+		pos = 0;
 		old_fs = get_fs();
 		set_fs(get_ds());
 		set_fs(KERNEL_DS);

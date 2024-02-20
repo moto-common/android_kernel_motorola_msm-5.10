@@ -578,7 +578,9 @@ static int qti_charger_get_batt_info(void *data, struct mmi_battery_info *batt_i
 {
 	int rc;
 	struct qti_charger *chg = data;
+#ifdef BM_ULOG
 	int batt_status = chg->batt_info.batt_status;
+#endif
 	struct battery_info info;
 
 	rc = qti_charger_read(chg, OEM_PROP_BATT_INFO,

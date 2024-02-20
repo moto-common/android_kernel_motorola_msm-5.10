@@ -702,7 +702,6 @@ static int aw99703_probe(struct i2c_client *client,
 {
 	struct aw99703_data *drvdata;
 #ifdef KERNEL_ABOVE_4_14
-	struct backlight_device *bl_dev;
 	struct backlight_properties props;
 #endif
 	int err = 0;
@@ -761,8 +760,8 @@ static int aw99703_probe(struct i2c_client *client,
 	props.type = BACKLIGHT_PLATFORM;
 	props.brightness = MAX_BRIGHTNESS;
 	props.max_brightness = MAX_BRIGHTNESS;
-	bl_dev = backlight_device_register(AW99703_NAME, &client->dev,
-					drvdata, &aw99703_bl_ops, &props);
+	backlight_device_register(AW99703_NAME, &client->dev,
+				drvdata, &aw99703_bl_ops, &props);
 #endif
 
 	g_aw99703_data = drvdata;

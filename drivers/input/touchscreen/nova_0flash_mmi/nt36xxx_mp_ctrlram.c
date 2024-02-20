@@ -361,8 +361,8 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 	char *fbufp = NULL;
 	mm_segment_t org_fs;
 	int32_t write_ret = 0;
-	uint32_t output_len = 0;
-	loff_t pos = 0;
+	uint32_t __maybe_unused output_len = 0;
+	loff_t __maybe_unused pos = 0;
 #if TOUCH_KEY_NUM > 0
 	int32_t k = 0;
 	int32_t keydata_output_offset = 0;
