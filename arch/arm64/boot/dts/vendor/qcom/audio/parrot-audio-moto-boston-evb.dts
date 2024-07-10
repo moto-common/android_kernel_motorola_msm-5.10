@@ -1,0 +1,46 @@
+/dts-v1/;
+/plugin/;
+
+#include "parrot-audio-moto-genevn-common.dtsi"
+/{
+	model = "boston";
+	compatible = "qcom,parrot-qrd", "qcom,parrot", "qcom,qrd", "moto,boston";
+	qcom,msm-id = <537 0x10000>;
+	qcom,board-id = <0x44 0x9000>, <0x44 0xB100>;
+};
+
+&tlmm {
+	hac_enable {
+		hac_enable_sleep: hac_enable_sleep {
+			mux {
+				pins = "gpio41";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio41";
+				drive-strength = <2>;   /* 2 mA */
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
+		hac_enable_active: hac_enable_active {
+			mux {
+				pins = "gpio41";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio41";
+				drive-strength = <16>;  /* 16 mA */
+				bias-disable;
+				output-high;
+			};
+		};
+	};
+};
+
+&waipio_snd {
+	qcom,hac_enable = <&tlmm 41 0>;
+};
