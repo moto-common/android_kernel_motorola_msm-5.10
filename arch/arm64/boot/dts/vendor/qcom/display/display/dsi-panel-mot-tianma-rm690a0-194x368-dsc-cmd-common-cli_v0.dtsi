@@ -1,0 +1,149 @@
+/* Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+&mdss_mdp {
+mot_tianma_rm690a0_194x368_dsc_cmd_cli_v0: qcom,mdss_dsi_mot_rm690a0_194x368_cmd_cli_v1 {
+		qcom,mdss-dsi-panel-name =
+			"mipi_mot_cmd_tianma_194x368";
+                qcom,mdss-dsi-panel-supplier = "tianma";
+		qcom,mdss-dsi-panel-type = "dsi_cmd_mode";
+		qcom,mdss-dsi-panel-physical-type = "oled";
+		qcom,mdss-dsi-virtual-channel-id = <0>;
+		qcom,mdss-dsi-stream = <0>;
+		qcom,mdss-dsi-bpp = <24>;
+		qcom,mdss-dsi-color-order = "rgb_swap_rgb";
+		qcom,mdss-dsi-underflow-color = <0xff>;
+		qcom,mdss-dsi-border-color = <0>;
+		qcom,mdss-pan-physical-width-dimension = <17>;
+		qcom,mdss-pan-physical-height-dimension = <33>;
+
+		qcom,dsi-sec-ctrl-num = <1>;
+		qcom,dsi-sec-phy-num = <1>;
+
+		qcom,mdss-dsi-traffic-mode = "burst_mode";
+		qcom,mdss-dsi-bllp-eof-power-mode;
+		qcom,mdss-dsi-bllp-power-mode;
+		qcom,mdss-dsi-lane-0-state;
+
+		qcom,mdss-dsi-dma-trigger = "trigger_sw";
+		qcom,mdss-dsi-mdp-trigger = "none";
+		qcom,mdss-dsi-reset-sequence = <0 12>, <1 1>, <0 1>, <1 13>;
+		//qcom,mdss-dsi-lp11-init;
+		qcom,mdss-dsi-tx-eot-append;
+		qcom,mdss-dsi-te-pin-select = <1>;
+		qcom,mdss-dsi-te-dcs-command = <1>;
+		qcom,mdss-dsi-te-using-te-pin;
+
+		//qcom,bklt-dcs-2bytes-enabled;
+		qcom,mdss-dsi-bl-min-level = <3>;
+		qcom,mdss-dsi-bl-max-level = <255>;
+		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+		qcom,mdss-dsi-rm690a0-backlight-config;
+
+qcom,mdss-dsi-display-timings {
+	timing@0{
+		qcom,mdss-dsi-cmd-mode;
+		qcom,mdss-dsi-panel-framerate = <60>;
+		qcom,mdss-dsi-panel-width = <194>;
+		qcom,mdss-dsi-panel-height = <368>;
+		qcom,mdss-dsi-h-front-porch = <4>;
+		qcom,mdss-dsi-h-back-porch = <4>;
+		qcom,mdss-dsi-h-pulse-width = <4>;
+		qcom,mdss-dsi-h-sync-skew = <0>;
+		qcom,mdss-dsi-h-sync-pulse = <0>;
+		qcom,mdss-dsi-v-back-porch = <1>;
+		qcom,mdss-dsi-v-front-porch = <1>;
+		qcom,mdss-dsi-v-pulse-width = <1>;
+		qcom,mdss-dsi-h-left-border = <0>;
+		qcom,mdss-dsi-h-right-border = <0>;
+		qcom,mdss-dsi-v-top-border = <0>;
+		qcom,mdss-dsi-v-bottom-border = <0>;
+		qcom,mdss-dsi-on-command = [
+		//MPIC SGM38046 swire
+		39 01 00 00 00 00 02 FE 01
+		39 01 00 00 00 00 02 66 10
+		39 01 00 00 00 00 02 69 32
+		39 01 00 00 00 00 02 6A 41
+		39 01 00 00 00 00 02 6B 0F
+		39 01 00 00 00 00 02 A7 0F
+		39 01 00 00 00 00 02 A9 44
+		39 01 00 00 00 00 02 AA 11
+		39 01 00 00 00 00 02 AB 3F
+		39 01 00 00 00 00 02 FE 05
+		39 01 00 00 00 00 02 D9 00
+		39 01 00 00 00 00 02 DA 10
+
+		39 01 00 00 00 00 02 FE 03
+		39 01 00 00 00 00 02 AC BA
+		39 01 00 00 00 00 02 FE 01
+		39 01 00 00 00 00 02 C8 B0
+
+		39 01 00 00 00 00 02 FE 00
+		39 01 00 00 00 00 05 2A 00 00 00 C1
+		39 01 00 00 00 00 05 2B 00 00 01 6F
+		39 01 00 00 00 00 05 31 00 01 00 C0
+		39 01 00 00 00 00 05 30 00 01 01 6E
+		39 01 00 00 00 00 02 35 02
+		39 01 00 00 00 00 02 12 00
+		05 01 00 00 64 00 01 11
+		05 01 00 00 14 00 01 29
+
+		];
+		qcom,mdss-dsi-off-command = [
+			05 01 00 00 14 00 01 28		/* display_off */
+			05 01 00 00 64 00 01 10];	/* enter sleep mode */
+
+		qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+		qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
+
+		qcom,mdss-dsi-lp1-command = [
+		39 00 00 40 00 00 02 FE 00
+		39 01 00 40 00 00 02 66 00
+		39 01 00 40 00 00 02 51 60
+		39 00 00 00 00 00 02 39 00
+		//39 00 00 40 00 00 02 FE 01
+		//39 00 00 00 00 00 02 30 41
+		];
+		qcom,mdss-dsi-lp2-command = [
+		39 00 00 40 00 00 02 FE 00
+		39 01 00 40 00 00 02 66 00
+		39 01 00 40 00 00 02 51 60
+		39 00 00 00 00 00 02 39 00
+		//39 00 00 40 00 00 02 FE 01
+		//39 00 00 00 00 00 02 30 41
+		];
+		qcom,mdss-dsi-nolp-command = [
+		39 00 00 40 00 00 02 FE 00
+		39 00 00 00 00 00 02 38 00];
+		//39 01 00 00 00 00 02 51 FF];
+
+		qcom,mdss-dsi-normal-backlight-command = [
+		39 00 00 40 00 00 02 FE 00
+		39 00 00 40 00 00 02 66 00
+		39 00 00 00 00 00 02 51 FF
+		];
+		qcom,mdss-dsi-hbm-backlight-command = [
+		39 00 00 40 00 00 02 FE 00
+		39 00 00 40 00 00 02 66 02
+		39 00 00 00 00 00 02 63 BA
+		];
+
+		qcom,mdss-dsi-lp1-command-state = "dsi_hs_mode";
+		qcom,mdss-dsi-lp2-command-state = "dsi_hs_mode";
+		qcom,mdss-dsi-nolp-command-state = "dsi_hs_mode";
+		qcom,mdss-dsi-normal-backlight-command-state = "dsi_hs_mode";
+		qcom,mdss-dsi-hbm-backlight-command-state = "dsi_hs_mode";
+	};
+};
+
+};
+
+};
