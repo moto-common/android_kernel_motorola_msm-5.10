@@ -1,0 +1,10 @@
+/*
+The file is original from qcom/parrot-moto-common-overlay-base.dtsi
+*/
+
+#include "parrot-qrd.dtsi"
+#include "parrot-qrd-pm8350b.dtsi"
+
+&usb0 {
+	qcom,disable-host-ssphy-powerdown;
+};

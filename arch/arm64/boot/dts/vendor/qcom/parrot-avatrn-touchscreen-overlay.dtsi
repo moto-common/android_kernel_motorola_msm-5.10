@@ -1,0 +1,85 @@
+/*
+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se9_i2c {
+        status = "disabled";
+};
+
+&qupv3_se9_spi {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	status = "ok";
+
+	goodix-berlin@0 {
+		status = "ok";
+		compatible = "goodix,gt9916S";
+		reg = <0>;
+
+		mmi,status = "/chosen","mmi,panel_name","contains","tm_vtdr6115","boe_nt37701a";
+		spi-max-frequency = <9600000>;  /* 4800000,9600000,15000000,19200000 */
+		goodix,reset-gpio = <&tlmm 64 0x0>;
+		goodix,irq-gpio = <&tlmm 65 0x2002>;
+		goodix,irq-flags = <0x2002>; /* 1:trigger rising, 2:trigger falling;*/
+		goodix,panel-max-id = <10>;
+		goodix,panel-max-x = <17280>; /* 1080*16 */
+		goodix,panel-max-y = <38400>; /* 2400*16 */
+		goodix,panel-max-w = <255>;
+		goodix,panel-max-p = <4096>;
+		goodix,iovdd-gpio = <&tlmm 126 0x0>;
+		goodix,avdd-name = "avdd";
+		avdd-supply = <&L28B>;
+		pinctrl-names = "pmx_ts_active", "pmx_ts_suspend", "pmx_ts_release";
+		pinctrl-0 = <&ts_spi_active>;
+		pinctrl-1 = <&ts_spi_int_suspend &ts_spi_reset_suspend>;
+		pinctrl-2 = <&ts_spi_release>;
+		goodix,firmware-name = "goodix_firmware.bin";
+		goodix,config-name = "goodix_cfg_group.bin";
+		goodix,edge-ctrl;
+		goodix,interpolation-ctrl;
+		goodix,gesture-wait-pm;
+		goodix,sample-ctrl;
+		goodix,stowed-mode-ctrl;
+		mmi,power-off-suspend;
+		mmi,enable-gestures;
+		mmi,usb-charger-detection;
+		mmi,supported_gesture_type = <0x07>;
+	};
+
+	focaltech@1 {
+		status = "ok";
+		compatible = "focaltech,fts";
+		reg = <1>;
+
+		mmi,status = "/chosen","mmi,panel_name","contains","csot_vtdr6115";
+		spi-max-frequency = <12000000>;
+		focaltech,reset-gpio = <&tlmm 64 0x0>;
+		focaltech,irq-gpio = <&tlmm 65 0x2800>;
+		focaltech,max-touch-number = <10>;
+		focaltech,display-coords =  <0 0 17280 38400>;
+		focaltech,vdd-gpio = <&tlmm 126 0x0>;
+		vdd-supply = <&L28B>;
+		pinctrl-names = "pmx_ts_active", "pmx_ts_suspend", "pmx_ts_release";
+		pinctrl-0 = <&ts_spi_active>;
+		pinctrl-1 = <&ts_spi_int_suspend &ts_spi_reset_suspend>;
+		pinctrl-2 = <&ts_spi_release>;
+		focaltech,edge-ctrl;
+		focaltech,sample-ctrl;
+		focaltech,interpolation-ctrl;
+		focaltech,stowed-mode-ctrl;
+		mmi,power-off-suspend;
+		mmi,enable-gestures;
+		mmi,usb-charger-detection;
+		mmi,supported_gesture_type = <0x07>;
+	};
+};

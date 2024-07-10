@@ -1,0 +1,113 @@
+/* Copyright (c) 2022, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/*
+   This base is original from "diwali-qrd-overlay.dts"
+*/
+
+#include "diwali-moto-common-overlay-base.dtsi"
+#include "diwali-moto-pm8350b.dtsi"
+#include "diwali-moto-common-overlay.dtsi"
+#include "diwali-moto-common-charger.dtsi"
+#include "diwali-tank-charger-overlay.dtsi"
+#include "diwali-tank-nfc-overlay.dtsi"
+#include "diwali-tank-se-overlay.dtsi"
+#include "diwali-tank-haptics-overlay.dtsi"
+#include "diwali-tank-touchscreen-overlay.dtsi"
+#include "diwali-tank-fingerprint-overlay.dtsi"
+#include "diwali-tank-bt-overlay.dtsi"
+#include "moto-tank-external-camera-pmic.dtsi"
+#include "diwali-tank-evb-sensor-overlay.dtsi"
+#include "diwali-tank-thermal-overlay.dtsi"
+
+&pm8010i_8 {
+	status = "disabled";
+};
+
+&pm8010i_9 {
+	status = "disabled";
+};
+
+&pm8010j_c {
+	status = "disabled";
+};
+
+&pm8010j_d {
+	status = "disabled";
+};
+
+&tlmm {
+	redriver_enable: redriver_enable {
+		mux {
+			pins = "gpio50";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio50";
+			drive-strength = <2>;
+			bias-disable; /* NO PULL */
+			output-high;
+		};
+	};
+	redriver_disable: redriver_disable {
+		mux {
+			pins = "gpio50";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio50";
+			drive-strength = <2>;
+			output-low;
+		};
+	};
+};
+
+&tlmm {
+        /* reserve FP GPIOs: gpio56,57,58,59 */
+        qcom,gpios-reserved = <56 57 58 59>;
+};
+
+&qupv3_se2_i2c {
+	status = "ok";
+	#include "diwali-moto-common-redriver.dtsi"
+};
+
+&redriver {
+	status = "ok";
+};
+
+&usb0 {
+	ssusb_redriver = <&redriver>;
+};
+
+&usb2_phy0 {
+	qcom,param-override-seq = <
+			/* override x0 */
+			0x47 0x6c
+			/* override x1 */
+			0xcb 0x70
+			/* override x2 */
+			0x16 0x74
+			/* override x3 */
+			0x03 0x78>;
+	qcom,host-param-override-seq = <
+			/* override x0 */
+			0x47 0x6c
+			/* override x1 */
+			0xcb 0x70
+			/* override x2 */
+			0x16 0x74
+			/* override x3 */
+			0x03 0x78>;
+};

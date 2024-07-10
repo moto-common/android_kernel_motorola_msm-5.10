@@ -1,0 +1,127 @@
+/* Copyright (c) 2021, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+&tlmm {
+	sar_int_default: sar_int_default {
+			mux {
+				pins = "gpio66";
+				function =  "gpio";
+			};
+			config {
+				pins = "gpio66";
+				num-grp-pins = <1>;
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+	};
+
+	sar_int_sleep: sar_int_sleep {
+			mux {
+				pins = "gpio66";
+				function =  "gpio";
+			};
+			config {
+				pins = "gpio66";
+				num-grp-pins = <1>;
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+	};
+};
+&qupv3_se14_i2c {
+	status = "ok";
+	sx937x@2c { /* SAR sensor */
+		compatible = "Semtech,sx937x";
+		reg = <0x2c>;
+		Semtech,power-supply-type = <0>;
+		cap_vdd-supply = <&pm8350c_l8>;
+		pinctrl-names = "default","sleep";
+		pinctrl-0 = <&sar_int_default>;
+		pinctrl-1 = <&sar_int_sleep>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <66 0x02>;
+		interrupt-names = "capsense0_irq";
+		Semtech,nirq-gpio= <&tlmm 66 0x02>;
+		/*use PH4/5/6 as the reference sensor
+		set it to 0xff if the ref-phases-x is not used*/
+		Semtech,ref-phases-a = <4>;
+		Semtech,ref-phases-b = <5>;
+		Semtech,ref-phases-c = <6>;
+		Semtech,button-flag = <0x0f>;
+		Semtech,button-names = "Moto CapSense Ch0","Moto CapSense Ch1","Moto CapSense Ch2","Moto CapSense Ch3";
+		Semtech,debug-name = "capsense0";
+		Semtech,reg-num = <59>;
+		Semtech,reg-init = <
+			0x8024  0x7F00
+			0x4004  0x70
+			0x4008  0x8
+			0x8020  0x32
+			0x8028  0x8A6
+			0x8034  0x886
+			0x8040  0x886
+			0x804C  0x886
+			0x8058  0x8B6
+			0x8064  0x87E
+			0x8070  0x87E
+			0x807C  0x85E
+			0x8030  0xFFF9FD    /*REG_AFEPH_PH0, CS0*/
+			0x803C  0xF7F9FF    /*REG_AFEPH_PH1, CS6*/
+			0x8048  0xBFF9FF    /*REG_AFEPH_PH2, CS7*/
+			0x8054  0xFFD9FF    /*REG_AFEPH_PH3, CS4*/
+			0x8060  0xFFF9EF    /*REG_AFEPH_PH4, CS1*/
+			0x806C  0xFFF97F    /*REG_AFEPH_PH5, CS2*/
+			0x8078  0xFEF9FF    /*REG_AFEPH_PH6, CS5*/
+			0x8084  0xBFF9FF    /*REG_AFEPH_PH7, NOT USE*/
+			0x8098  0xAB3C
+			0x80B8  0x9541
+			0x80D8  0x4343
+			0x80F8  0x7B7B
+			0x8118  0xFF
+			0x8138  0xFF
+			0x8158  0xFF
+			0x8178  0xFF
+			0x80A0  0x21230001
+			0x80C0  0x2C2D0003
+			0x80E0  0x2C2C0003
+			0x8100  0x55570003
+			0x8188  0x8000014
+			0x818C  0x5
+			0x8190  0x8000016
+			0x8090  0x103E
+			0x80B0  0x103E
+			0x80D0  0x104D
+			0x80F0  0x104D
+			0x8110  0x54AC5000
+			0x8130  0x54AC5000
+			0x8150  0x54AC5000
+			0x8170  0x54AC5000
+			0x8088  0x300000
+			0x80A8  0x300000
+			0x80C8  0x300000
+			0x80E8  0x300000
+			0x8108  0x600000
+			0x8128  0x600000
+			0x8148  0x600000
+			0x8168  0x300000
+			0x808C  0x602000C0
+			0x80AC  0x602000C0
+			0x80CC  0x602000C0
+			0x80EC  0x602000C0
+			0x810C  0x60200030
+			0x812C  0x60200030
+			0x814C  0x60200030
+			0x816C  0x60200030
+		>;
+		reinit-on-cali;
+
+		status = "ok";
+	};
+};
